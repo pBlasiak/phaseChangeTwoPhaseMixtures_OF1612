@@ -1,0 +1,82 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Foam	phaseChangeTwoPhaseMixture.C	/^namespace Foam$/;"	n	language:C++	file:
+Foam	phaseChangeTwoPhaseMixture.H	/^namespace Foam$/;"	n	language:C++
+Foam::phaseChangeTwoPhaseMixture	phaseChangeTwoPhaseMixture.H	/^class phaseChangeTwoPhaseMixture$/;"	c	language:C++	namespace:Foam
+Foam::phaseChangeTwoPhaseMixture::New	newPhaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::New$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::R	phaseChangeTwoPhaseMixture.H	/^        const dimensionedScalar& R() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::R_	phaseChangeTwoPhaseMixture.H	/^        dimensionedScalar R_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::TSat	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& TSat() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::TSatG	phaseChangeTwoPhaseMixture.H	/^        const dimensionedScalar& TSatG() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::TSatG_	phaseChangeTwoPhaseMixture.H	/^        dimensionedScalar TSatG_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::TSatLocalPressure_	phaseChangeTwoPhaseMixture.H	/^		Switch TSatLocalPressure_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::TSat_	phaseChangeTwoPhaseMixture.H	/^        volScalarField TSat_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::T_	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& T_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::calcTSatLocal	phaseChangeTwoPhaseMixture.C	/^void Foam::phaseChangeTwoPhaseMixture::calcTSatLocal() $/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::correct	phaseChangeTwoPhaseMixture.C	/^void Foam::phaseChangeTwoPhaseMixture::correct()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::hEvap	phaseChangeTwoPhaseMixture.H	/^        const dimensionedScalar& hEvap() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::hEvap_	phaseChangeTwoPhaseMixture.H	/^        dimensionedScalar hEvap_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mCond	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& mCond() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mCondAlphal_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mCondAlphal_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mCondP_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mCondP_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mCondT_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mCondT_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mCond_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mCond_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mEvap	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& mEvap() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mEvapAlphal_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mEvapAlphal_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mEvapP_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mEvapP_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mEvapT_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mEvapT_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::mEvap_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mEvap_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::pSat	phaseChangeTwoPhaseMixture.H	/^        const dimensionedScalar& pSat() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::pSat_	phaseChangeTwoPhaseMixture.H	/^        dimensionedScalar pSat_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::p_	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& p_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture	phaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixtureCoeffs_	phaseChangeTwoPhaseMixture.H	/^        dictionary phaseChangeTwoPhaseMixtureCoeffs_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::printPhaseChange_	phaseChangeTwoPhaseMixture.H	/^		Switch printPhaseChange_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::read	phaseChangeTwoPhaseMixture.C	/^bool Foam::phaseChangeTwoPhaseMixture::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::vDotAlphal	phaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::vDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::vDotP	phaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::vDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::vDotT	phaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::vDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+Foam::phaseChangeTwoPhaseMixture::~phaseChangeTwoPhaseMixture	phaseChangeTwoPhaseMixture.H	/^    virtual ~phaseChangeTwoPhaseMixture()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+New	newPhaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::New$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+R	phaseChangeTwoPhaseMixture.H	/^        const dimensionedScalar& R() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+R_	phaseChangeTwoPhaseMixture.H	/^        dimensionedScalar R_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+TSat	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& TSat() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+TSatG	phaseChangeTwoPhaseMixture.H	/^        const dimensionedScalar& TSatG() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+TSatG_	phaseChangeTwoPhaseMixture.H	/^        dimensionedScalar TSatG_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+TSatLocalPressure_	phaseChangeTwoPhaseMixture.H	/^		Switch TSatLocalPressure_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+TSat_	phaseChangeTwoPhaseMixture.H	/^        volScalarField TSat_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+T_	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& T_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+calcTSatLocal	phaseChangeTwoPhaseMixture.C	/^void Foam::phaseChangeTwoPhaseMixture::calcTSatLocal() $/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+correct	phaseChangeTwoPhaseMixture.C	/^void Foam::phaseChangeTwoPhaseMixture::correct()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+hEvap	phaseChangeTwoPhaseMixture.H	/^        const dimensionedScalar& hEvap() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+hEvap_	phaseChangeTwoPhaseMixture.H	/^        dimensionedScalar hEvap_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mCond	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& mCond() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mCondAlphal_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mCondAlphal_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mCondP_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mCondP_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mCondT_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mCondT_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mCond_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mCond_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mEvap	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& mEvap() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mEvapAlphal_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mEvapAlphal_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mEvapP_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mEvapP_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mEvapT_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mEvapT_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+mEvap_	phaseChangeTwoPhaseMixture.H	/^		volScalarField mEvap_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+newPhaseChangeTwoPhaseMixture.C	newPhaseChangeTwoPhaseMixture.C	1;"	F	language:C++
+pSat	phaseChangeTwoPhaseMixture.H	/^        const dimensionedScalar& pSat() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+pSat_	phaseChangeTwoPhaseMixture.H	/^        dimensionedScalar pSat_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+p_	phaseChangeTwoPhaseMixture.H	/^        const volScalarField& p_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+phaseChangeTwoPhaseMixture	phaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+phaseChangeTwoPhaseMixture	phaseChangeTwoPhaseMixture.H	/^class phaseChangeTwoPhaseMixture$/;"	c	language:C++	namespace:Foam
+phaseChangeTwoPhaseMixture.C	phaseChangeTwoPhaseMixture.C	1;"	F	language:C++
+phaseChangeTwoPhaseMixture.H	phaseChangeTwoPhaseMixture.H	1;"	F	language:C++
+phaseChangeTwoPhaseMixtureCoeffs_	phaseChangeTwoPhaseMixture.H	/^        dictionary phaseChangeTwoPhaseMixtureCoeffs_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+phaseChangeTwoPhaseMixture_H	phaseChangeTwoPhaseMixture.H	36;"	d	language:C++
+printPhaseChange_	phaseChangeTwoPhaseMixture.H	/^		Switch printPhaseChange_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+read	phaseChangeTwoPhaseMixture.C	/^bool Foam::phaseChangeTwoPhaseMixture::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+vDotAlphal	phaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::vDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+vDotP	phaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::vDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+vDotT	phaseChangeTwoPhaseMixture.C	/^Foam::phaseChangeTwoPhaseMixture::vDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture
+~phaseChangeTwoPhaseMixture	phaseChangeTwoPhaseMixture.H	/^    virtual ~phaseChangeTwoPhaseMixture()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixture

@@ -1,0 +1,41 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Cc_	Xu.H	/^        dimensionedScalar Cc_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Cv_	Xu.H	/^        dimensionedScalar Cv_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam	Xu.C	/^namespace Foam$/;"	n	language:C++	file:
+Foam	Xu.H	/^namespace Foam$/;"	n	language:C++
+Foam::phaseChangeTwoPhaseMixtures	Xu.C	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam	file:
+Foam::phaseChangeTwoPhaseMixtures	Xu.H	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam
+Foam::phaseChangeTwoPhaseMixtures::Xu	Xu.H	/^class Xu$/;"	c	language:C++	namespace:Foam::phaseChangeTwoPhaseMixtures
+Foam::phaseChangeTwoPhaseMixtures::Xu::Cc_	Xu.H	/^        dimensionedScalar Cc_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::Cv_	Xu.H	/^        dimensionedScalar Cv_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::Xu	Xu.C	/^Foam::phaseChangeTwoPhaseMixtures::Xu::Xu$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::correct	Xu.C	/^void Foam::phaseChangeTwoPhaseMixtures::Xu::correct()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::mDotAlphal	Xu.C	/^Foam::phaseChangeTwoPhaseMixtures::Xu::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::mDotP	Xu.C	/^Foam::phaseChangeTwoPhaseMixtures::Xu::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::mDotT	Xu.C	/^Foam::phaseChangeTwoPhaseMixtures::Xu::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::mcCoeff_	Xu.H	/^        dimensionedScalar mcCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::mvCoeff_	Xu.H	/^        dimensionedScalar mvCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::override	Xu.H	/^        virtual void correct() override;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::read	Xu.C	/^bool Foam::phaseChangeTwoPhaseMixtures::Xu::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Foam::phaseChangeTwoPhaseMixtures::Xu::~Xu	Xu.H	/^    virtual ~Xu()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Xu	Xu.C	/^Foam::phaseChangeTwoPhaseMixtures::Xu::Xu$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+Xu	Xu.H	/^class Xu$/;"	c	language:C++	namespace:Foam::phaseChangeTwoPhaseMixtures
+Xu.C	Xu.C	1;"	F	language:C++
+Xu.H	Xu.H	1;"	F	language:C++
+Xu_H	Xu.H	52;"	d	language:C++
+correct	Xu.C	/^void Foam::phaseChangeTwoPhaseMixtures::Xu::correct()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+mDotAlphal	Xu.C	/^Foam::phaseChangeTwoPhaseMixtures::Xu::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+mDotP	Xu.C	/^Foam::phaseChangeTwoPhaseMixtures::Xu::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+mDotT	Xu.C	/^Foam::phaseChangeTwoPhaseMixtures::Xu::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+mcCoeff_	Xu.H	/^        dimensionedScalar mcCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+mvCoeff_	Xu.H	/^        dimensionedScalar mvCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+override	Xu.H	/^        virtual void correct() override;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+phaseChangeTwoPhaseMixtures	Xu.C	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam	file:
+phaseChangeTwoPhaseMixtures	Xu.H	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam
+read	Xu.C	/^bool Foam::phaseChangeTwoPhaseMixtures::Xu::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu
+~Xu	Xu.H	/^    virtual ~Xu()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Xu

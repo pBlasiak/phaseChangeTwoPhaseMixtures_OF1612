@@ -1,0 +1,39 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Foam	Tanasawa.C	/^namespace Foam$/;"	n	language:C++	file:
+Foam	Tanasawa.H	/^namespace Foam$/;"	n	language:C++
+Foam::phaseChangeTwoPhaseMixtures	Tanasawa.C	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam	file:
+Foam::phaseChangeTwoPhaseMixtures	Tanasawa.H	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa	Tanasawa.H	/^class Tanasawa$/;"	c	language:C++	namespace:Foam::phaseChangeTwoPhaseMixtures
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::Tanasawa	Tanasawa.C	/^Foam::phaseChangeTwoPhaseMixtures::Tanasawa::Tanasawa$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::calcGradAlphal	Tanasawa.C	/^Foam ::volScalarField Foam::phaseChangeTwoPhaseMixtures::Tanasawa::calcGradAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::cond_	Tanasawa.H	/^    	Switch cond_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::evap_	Tanasawa.H	/^    	Switch evap_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::gamma_	Tanasawa.H	/^    	dimensionedScalar gamma_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mCoeff_	Tanasawa.H	/^        dimensionedScalar mCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal	Tanasawa.C	/^Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP	Tanasawa.C	/^Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotT	Tanasawa.C	/^Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::read	Tanasawa.C	/^bool Foam::phaseChangeTwoPhaseMixtures::Tanasawa::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::~Tanasawa	Tanasawa.H	/^        virtual ~Tanasawa()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Tanasawa	Tanasawa.C	/^Foam::phaseChangeTwoPhaseMixtures::Tanasawa::Tanasawa$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+Tanasawa	Tanasawa.H	/^class Tanasawa$/;"	c	language:C++	namespace:Foam::phaseChangeTwoPhaseMixtures
+Tanasawa.C	Tanasawa.C	1;"	F	language:C++
+Tanasawa.H	Tanasawa.H	1;"	F	language:C++
+Tanasawa_H	Tanasawa.H	46;"	d	language:C++
+calcGradAlphal	Tanasawa.C	/^Foam ::volScalarField Foam::phaseChangeTwoPhaseMixtures::Tanasawa::calcGradAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+cond_	Tanasawa.H	/^    	Switch cond_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+evap_	Tanasawa.H	/^    	Switch evap_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+gamma_	Tanasawa.H	/^    	dimensionedScalar gamma_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+mCoeff_	Tanasawa.H	/^        dimensionedScalar mCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+mDotAlphal	Tanasawa.C	/^Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+mDotP	Tanasawa.C	/^Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+mDotT	Tanasawa.C	/^Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+phaseChangeTwoPhaseMixtures	Tanasawa.C	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam	file:
+phaseChangeTwoPhaseMixtures	Tanasawa.H	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam
+read	Tanasawa.C	/^bool Foam::phaseChangeTwoPhaseMixtures::Tanasawa::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa
+~Tanasawa	Tanasawa.H	/^        virtual ~Tanasawa()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Tanasawa

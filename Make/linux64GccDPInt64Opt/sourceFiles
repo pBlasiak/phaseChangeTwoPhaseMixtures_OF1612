@@ -1,0 +1,10 @@
+SOURCE = \
+thermalIncompressibleTwoPhaseMixture/thermalIncompressibleTwoPhaseMixture.C \
+phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixture.C \
+phaseChangeTwoPhaseMixture/newPhaseChangeTwoPhaseMixture.C \
+Lee/Lee.C \
+Tanasawa/Tanasawa.C \
+ChoiZhang/ChoiZhang.C \
+Xu/Xu.C \
+Constant/Constant.C \
+NichitaThome/NichitaThome.C 
