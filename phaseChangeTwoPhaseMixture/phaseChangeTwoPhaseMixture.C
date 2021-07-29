@@ -49,12 +49,12 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
         IOobject
         (
             "mCond",
-            U_.time().timeName(),
-            U_.db(),
+            U.time().timeName(),
+            U.db(),
 			IOobject::NO_READ,
 			IOobject::NO_WRITE
         ),
-        U_.mesh(),
+        U.mesh(),
         dimensionedScalar("mCond", dimensionSet(1, 0, -1, 0, 0, 0, 0), 0.0)
     ),
     mEvap_
@@ -62,12 +62,12 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
         IOobject
         (
             "mEvap",
-            U_.time().timeName(),
-            U_.db(),
+            U.time().timeName(),
+            U.db(),
 			IOobject::NO_READ,
 			IOobject::NO_WRITE
         ),
-        U_.mesh(),
+        U.mesh(),
         dimensionedScalar("mEvap", dimensionSet(1, 0, -1, 0, 0, 0, 0), 0.0)
     ),
 	mCondAlphal_
@@ -75,12 +75,12 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 	    IOobject
 	    (
 	        "mCondAlphal",
-	        U_.time().timeName(),
-	        U_.db(),
+	        U.time().timeName(),
+	        U.db(),
 			IOobject::NO_READ,
 			IOobject::NO_WRITE
 	    ),
-	    U_.mesh(),
+	    U.mesh(),
 	    dimensionedScalar("mCondAlphal", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
 	),
 	mEvapAlphal_
@@ -88,12 +88,12 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 	    IOobject
 	    (
 	        "mEvapAlphal",
-	        U_.time().timeName(),
-	        U_.db(),
+	        U.time().timeName(),
+	        U.db(),
 			IOobject::NO_READ,
 			IOobject::NO_WRITE
 	    ),
-	    U_.mesh(),
+	    U.mesh(),
 	    dimensionedScalar("mEvapAlphal", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
 	),
 	mCondP_
@@ -101,12 +101,12 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 	    IOobject
 	    (
 	        "mCondP",
-	        U_.time().timeName(),
-	        U_.db(),
+	        U.time().timeName(),
+	        U.db(),
 			IOobject::NO_READ,
 			IOobject::NO_WRITE
 	    ),
-	    U_.mesh(),
+	    U.mesh(),
 	    dimensionedScalar("mCondP", dimensionSet(0, -2, 1, 0, 0, 0, 0), 0.0)
 	),
 	mEvapP_
@@ -114,12 +114,12 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 	    IOobject
 	    (
 	        "mEvapP",
-	        U_.time().timeName(),
-	        U_.db(),
+	        U.time().timeName(),
+	        U.db(),
 			IOobject::NO_READ,
 			IOobject::NO_WRITE
 	    ),
-	    U_.mesh(),
+	    U.mesh(),
 	    dimensionedScalar("mEvapP", dimensionSet(0, -2, 1, 0, 0, 0, 0), 0.0)
 	),
 	mCondT_
@@ -127,12 +127,12 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 	    IOobject
 	    (
 	        "mCondT",
-	        U_.time().timeName(),
-	        U_.db(),
+	        U.time().timeName(),
+	        U.db(),
 			IOobject::NO_READ,
 			IOobject::NO_WRITE
 	    ),
-	    U_.mesh(),
+	    U.mesh(),
 	    dimensionedScalar("mCondT", dimensionSet(1, -3, -1, -1, 0, 0, 0), 0.0)
 	),
 	mEvapT_
@@ -140,28 +140,28 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 	    IOobject
 	    (
 	        "mEvapT",
-	        U_.time().timeName(),
-	        U_.db(),
+	        U.time().timeName(),
+	        U.db(),
 			IOobject::NO_READ,
 			IOobject::NO_WRITE
 	    ),
-	    U_.mesh(),
+	    U.mesh(),
 	    dimensionedScalar("mEvapT", dimensionSet(1, -3, -1, -1, 0, 0, 0), 0.0)
 	),
-	p_(U_.db().lookupObject<volScalarField>("p")),
-	T_(U_.db().lookupObject<volScalarField>("T")),
+	p_(U.db().lookupObject<volScalarField>("p")),
+	T_(U.db().lookupObject<volScalarField>("T")),
     TSatG_("TSatGlobal", dimTemperature, lookup("TSatGlobal")),
     TSat_
     (
         IOobject
         (
             "TSat",
-            U_.time().timeName(),
-            U_.db(),
+            U.time().timeName(),
+            U.db(),
 			IOobject::NO_READ,
 			IOobject::NO_WRITE
         ),
-        U_.mesh(),
+        U.mesh(),
 		TSatG_
     ),
     pSat_("pSat", dimPressure, lookup("pSat")),
@@ -197,7 +197,7 @@ void Foam::phaseChangeTwoPhaseMixture::calcTSatLocal()
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixture::vDotAlphal() const
 {
-    volScalarField alphalCoeff(1.0/rho1() - alpha1_*(1.0/rho1() - 1.0/rho2()));
+    volScalarField alphalCoeff(1.0/rho1() - alpha1()*(1.0/rho1() - 1.0/rho2()));
     Pair<tmp<volScalarField> > mDotAlphal = this->mDotAlphal();
 
     return Pair<tmp<volScalarField> >
@@ -232,8 +232,8 @@ void Foam::phaseChangeTwoPhaseMixture::correct()
 {
 	calcTSatLocal();
 
-    volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
-    const fvMesh& mesh = alpha1_.mesh();
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
+    const fvMesh& mesh = alpha1().mesh();
 	// prawdopodobnie jest zle liczone mCond_ i mEvap
 	// raczej powinno byc policzone bez internalField 
 	// ewentualnie dodac boundaryField

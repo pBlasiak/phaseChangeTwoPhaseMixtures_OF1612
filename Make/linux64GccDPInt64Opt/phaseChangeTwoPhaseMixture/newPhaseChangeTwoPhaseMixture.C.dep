@@ -2,6 +2,7 @@ $(OBJECTS_DIR)/phaseChangeTwoPhaseMixture/newPhaseChangeTwoPhaseMixture.C.dep: \
 phaseChangeTwoPhaseMixture/newPhaseChangeTwoPhaseMixture.C \
 phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixture.H \
 lnInclude/thermalIncompressibleTwoPhaseMixture.H \
+$(WM_PROJECT_DIR)/src/transportModels/immiscibleIncompressibleTwoPhaseMixture/lnInclude/immiscibleIncompressibleTwoPhaseMixture.H \
 $(WM_PROJECT_DIR)/src/transportModels/incompressible/lnInclude/incompressibleTwoPhaseMixture.H \
 $(WM_PROJECT_DIR)/src/transportModels/incompressible/transportModel/transportModel.H \
 $(WM_PROJECT_DIR)/src/OpenFOAM/lnInclude/primitiveFieldsFwd.H \
@@ -509,5 +510,16 @@ $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/calculatedFvPatchField.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/calculatedFvPatchField.C \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/calculatedFvPatchFields.H \
 $(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/volFieldsI.H \
+$(WM_PROJECT_DIR)/src/transportModels/interfaceProperties/lnInclude/interfaceProperties.H \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/surfaceFields.H \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/surfaceMesh.H \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvsPatchFields.H \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvsPatchField.H \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvsPatchField.C \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvsPatchFieldNew.C \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/calculatedFvsPatchField.H \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/calculatedFvsPatchField.C \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/fvsPatchFieldsFwd.H \
+$(WM_PROJECT_DIR)/src/finiteVolume/lnInclude/calculatedFvsPatchFields.H \
 
 

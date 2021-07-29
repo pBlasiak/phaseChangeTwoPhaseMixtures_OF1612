@@ -76,7 +76,7 @@ Foam::phaseChangeTwoPhaseMixtures::Xu::mDotAlphal() const
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Xu::mDotP() const
 {
-    const volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+    const volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
     const dimensionedScalar T0("0", dimTemperature, 0.0);
 
     return Pair<tmp<volScalarField> >
@@ -93,7 +93,7 @@ Foam::phaseChangeTwoPhaseMixtures::Xu::mDotP() const
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Xu::mDotT() const
 {
-    volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 
     return Pair<tmp<volScalarField> >
     (

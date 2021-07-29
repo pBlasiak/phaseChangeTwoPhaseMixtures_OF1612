@@ -44,7 +44,7 @@ Foam::thermalIncompressibleTwoPhaseMixture::thermalIncompressibleTwoPhaseMixture
     const surfaceScalarField& phi
 )
 :
-    incompressibleTwoPhaseMixture(U, phi),
+    immiscibleIncompressibleTwoPhaseMixture(U, phi),
 
     k1_
     (
@@ -87,7 +87,7 @@ Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::k() 
 {
     const volScalarField limitedAlpha1
     (
-        min(max(alpha1_, scalar(0)), scalar(1))
+        min(max(alpha1(), scalar(0)), scalar(1))
     );
 
     return tmp<volScalarField>
@@ -105,7 +105,7 @@ Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::rho(
 {
     const volScalarField limitedAlpha1
     (
-        min(max(alpha1_, scalar(0)), scalar(1))
+        min(max(alpha1(), scalar(0)), scalar(1))
     );
 
     return tmp<volScalarField>
@@ -124,7 +124,7 @@ Foam::thermalIncompressibleTwoPhaseMixture::kfHarmonic() const
 {
     const surfaceScalarField limitedAlpha1f
     (
-        min(max(fvc::interpolate(alpha1_), scalar(0)), scalar(1))
+        min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
     );
 
     return tmp<surfaceScalarField>
@@ -146,7 +146,7 @@ Foam::thermalIncompressibleTwoPhaseMixture::kfDensityHarmonic() const
 {
     const surfaceScalarField limitedAlpha1f
     (
-        min(max(fvc::interpolate(alpha1_), scalar(0)), scalar(1))
+        min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
     );
 
     return tmp<surfaceScalarField>
@@ -166,7 +166,7 @@ Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::cp()
 {
 	const volScalarField limitedAlpha1
 	(
-		min(max(alpha1_, scalar(0)), scalar(1))
+		min(max(alpha1(), scalar(0)), scalar(1))
 	);
 
 	return tmp<volScalarField>
@@ -185,7 +185,7 @@ Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::alph
 {
 	const volScalarField limitedAlpha1
 	(
-		min(max(alpha1_, scalar(0)), scalar(1))
+		min(max(alpha1(), scalar(0)), scalar(1))
 	);
 
 	return tmp<volScalarField>

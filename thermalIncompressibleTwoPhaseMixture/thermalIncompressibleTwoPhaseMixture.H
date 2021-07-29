@@ -35,7 +35,8 @@ SourceFiles
 #ifndef thermalIncompressibleTwoPhaseMixture_H
 #define thermalIncompressibleTwoPhaseMixture_H
 
-#include "incompressibleTwoPhaseMixture.H"
+//#include "incompressibleTwoPhaseMixture.H"
+#include "immiscibleIncompressibleTwoPhaseMixture.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -48,7 +49,7 @@ namespace Foam
 
 class thermalIncompressibleTwoPhaseMixture
 :
-    public incompressibleTwoPhaseMixture
+    public immiscibleIncompressibleTwoPhaseMixture
 {
 protected:
 

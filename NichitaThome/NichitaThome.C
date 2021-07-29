@@ -62,7 +62,7 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::NichitaThome
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 Foam ::volVectorField Foam::phaseChangeTwoPhaseMixtures::NichitaThome::calcGradAlphal() const
 {
-	volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+	volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 	return fvc::grad(limitedAlpha1);
 }
 
@@ -74,7 +74,7 @@ Foam ::volVectorField Foam::phaseChangeTwoPhaseMixtures::NichitaThome::calcGradT
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotAlphal() const
 {
-    volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
     const dimensionedScalar T0("0", dimTemperature, 0.0);
 	const volScalarField kEff = this->k();
 	const volScalarField gradAlphaGradT = calcGradAlphal() & calcGradT();
@@ -116,7 +116,7 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotAlphal() const
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotP() const
 {
-    volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
     const dimensionedScalar T0("0", dimTemperature, 0.0);
 	const volScalarField kEff = this->k();
 	const volScalarField gradAlphaGradT = calcGradAlphal() & calcGradT();
@@ -162,7 +162,7 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotP() const
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotT() const
 {
-    volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 	const volScalarField kEff = this->k();
 	const volScalarField gradAlphaGradT = calcGradAlphal() & calcGradT();
 

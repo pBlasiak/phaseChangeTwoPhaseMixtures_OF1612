@@ -67,7 +67,7 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::Tanasawa
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 Foam ::volScalarField Foam::phaseChangeTwoPhaseMixtures::Tanasawa::calcGradAlphal() const
 {
-	volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+	volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 	return mag(fvc::grad(limitedAlpha1));
 }
 
@@ -113,7 +113,7 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal() const
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 {
-    volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
     const dimensionedScalar T0("0", dimTemperature, 0.0);
 
 	if (cond_ && evap_)
@@ -157,7 +157,7 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotT() const
 {
-    volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 
 	if (cond_ && evap_)
 	{

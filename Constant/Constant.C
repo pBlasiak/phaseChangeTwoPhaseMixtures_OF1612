@@ -62,7 +62,7 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::Constant
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 Foam ::volScalarField Foam::phaseChangeTwoPhaseMixtures::Constant::calcGradAlphal() const
 {
-	volScalarField limitedAlpha1 = min(max(alpha1_, scalar(0)), scalar(1));
+	volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 	return mag(fvc::grad(limitedAlpha1));
 }
 
