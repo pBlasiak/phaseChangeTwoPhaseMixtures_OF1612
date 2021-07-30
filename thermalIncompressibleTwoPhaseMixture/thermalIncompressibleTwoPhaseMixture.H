@@ -138,6 +138,13 @@ public:
 //            return hEvap_;
 //        };
 
+        //- Correct the transport and interface properties
+        virtual void correct()
+        {
+			Info<< "CORRECT!!!!!!!!!!!!!!!" << endl;
+            immiscibleIncompressibleTwoPhaseMixture::correct();
+        }
+
         //- Read base transportProperties dictionary
         virtual bool read();
 

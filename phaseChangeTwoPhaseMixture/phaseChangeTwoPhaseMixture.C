@@ -230,6 +230,7 @@ Foam::phaseChangeTwoPhaseMixture::vDotP() const
 
 void Foam::phaseChangeTwoPhaseMixture::correct()
 {
+	thermalIncompressibleTwoPhaseMixture::correct();
 	calcTSatLocal();
 
     volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
