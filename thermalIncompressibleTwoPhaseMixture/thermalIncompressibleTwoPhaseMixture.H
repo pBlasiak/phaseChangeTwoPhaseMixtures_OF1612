@@ -141,7 +141,6 @@ public:
         //- Correct the transport and interface properties
         virtual void correct()
         {
-			Info<< "CORRECT!!!!!!!!!!!!!!!" << endl;
             immiscibleIncompressibleTwoPhaseMixture::correct();
         }
 
