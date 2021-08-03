@@ -115,6 +115,10 @@ public:
 		//- Return thermal conductivity of the mixture
 		tmp<volScalarField> k() const;
 		
+		//- Return face-interpolated thermal conductivity 
+		//  of the mixture 
+		tmp<surfaceScalarField> kf() const;
+
 		//- Return density of the mixture
 		tmp<volScalarField> rho() const;
 		
