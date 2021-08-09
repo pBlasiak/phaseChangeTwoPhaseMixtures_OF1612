@@ -120,24 +120,6 @@ Foam::thermalIncompressibleTwoPhaseMixture::kf() const
     );
 }
 
-Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::rho() const
-{
-    const volScalarField limitedAlpha1
-    (
-        min(max(alpha1(), scalar(0)), scalar(1))
-    );
-
-    return tmp<volScalarField>
-    (
-		new volScalarField
-        (
-            "rhoMixture",
-            limitedAlpha1*rho1_
-          + (scalar(1) - limitedAlpha1)*rho2_
-        )
-    );
-}
-
 Foam::tmp<Foam::surfaceScalarField> 
 Foam::thermalIncompressibleTwoPhaseMixture::kfHarmonic() const
 {
@@ -181,6 +163,24 @@ Foam::thermalIncompressibleTwoPhaseMixture::kfDensityHarmonic() const
     );
 }
 
+Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::rho() const
+{
+    const volScalarField limitedAlpha1
+    (
+        min(max(alpha1(), scalar(0)), scalar(1))
+    );
+
+    return tmp<volScalarField>
+    (
+		new volScalarField
+        (
+            "rhoMixture",
+            limitedAlpha1*rho1_
+          + (scalar(1) - limitedAlpha1)*rho2_
+        )
+    );
+}
+
 Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::cp() const
 {
 	const volScalarField limitedAlpha1
@@ -217,6 +217,26 @@ Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::alph
 	);
 }
 
+Foam::tmp<Foam::surfaceScalarField> Foam::thermalIncompressibleTwoPhaseMixture::alphaEfff() const
+{
+	const surfaceScalarField limitedAlpha1f
+	(
+		min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
+	);
+
+	return tmp<surfaceScalarField>
+	(
+		new surfaceScalarField
+		(
+			"alphaEfff",
+			(
+                limitedAlpha1f*k1_/rho1_/cp1_ 
+			  + (scalar(1) - limitedAlpha1f)*k2_/rho2_/cp2_
+			)
+		)
+	);
+}
+
 bool Foam::thermalIncompressibleTwoPhaseMixture::read()
 {
     if (incompressibleTwoPhaseMixture::read())
@@ -226,8 +246,6 @@ bool Foam::thermalIncompressibleTwoPhaseMixture::read()
 
         subDict(phase1Name_).lookup("cp") >> cp1_;
         subDict(phase2Name_).lookup("cp") >> cp2_;
-
-      //  subDict(phase2Name_).lookup("hEvap") >> hEvap_;
 
         return true;
     }

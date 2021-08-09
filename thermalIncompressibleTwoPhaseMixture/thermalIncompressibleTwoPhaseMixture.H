@@ -119,9 +119,6 @@ public:
 		//  of the mixture 
 		tmp<surfaceScalarField> kf() const;
 
-		//- Return density of the mixture
-		tmp<volScalarField> rho() const;
-		
 		//- Return face-interpolated harmonic thermal conductivity 
 		//  of the mixture 
 		tmp<surfaceScalarField> kfHarmonic() const;
@@ -130,17 +127,17 @@ public:
 		//  harmonic thermal conductivity of the mixture 
 		tmp<surfaceScalarField> kfDensityHarmonic() const;
 
+		//- Return density of the mixture
+		tmp<volScalarField> rho() const;
+
 		//- Return specific heat of the mixture
 		tmp<volScalarField> cp() const;
 
 		//- Return thermal diffusivity of the mixture
 		tmp<volScalarField> alphaEff() const;
 
-//        //- Return enthalpy of vaporization
-//        const dimensionedScalar& hEvap() const
-//        {
-//            return hEvap_;
-//        };
+		//- Return face-interpolated thermal diffusivity of the mixture
+		tmp<surfaceScalarField> alphaEfff() const;
 
         //- Correct the transport and interface properties
         virtual void correct()
