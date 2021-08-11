@@ -230,8 +230,9 @@ Foam::tmp<Foam::surfaceScalarField> Foam::thermalIncompressibleTwoPhaseMixture::
 		(
 			"alphaEfff",
 			(
-                limitedAlpha1f*k1_/rho1_/cp1_ 
-			  + (scalar(1) - limitedAlpha1f)*k2_/rho2_/cp2_
+              //  limitedAlpha1f*k1_/rho1_/cp1_ 
+			  //+ (scalar(1) - limitedAlpha1f)*k2_/rho2_/cp2_
+			  fvc::interpolate(alphaEff())
 			)
 		)
 	);
