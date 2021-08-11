@@ -2,4 +2,6 @@ SOURCE = \
 thermalIncompressibleTwoPhaseMixture/thermalIncompressibleTwoPhaseMixture.C \
 phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixture.C \
 phaseChangeTwoPhaseMixture/newPhaseChangeTwoPhaseMixture.C \
-Lee/Lee.C 
+Lee/Lee.C \
+Tanasawa/Tanasawa.C \
+Constant/Constant.C 

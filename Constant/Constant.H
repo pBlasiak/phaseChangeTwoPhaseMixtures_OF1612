@@ -95,6 +95,9 @@ public:
 
     // Member Functions
 
+        //- Return the volumetric mass condensation (+) and vaporisation (-) rates 
+		//  units are kg/(m3 s)
+        virtual Pair<tmp<volScalarField> > vmDot() const;
 
         //- Return the mass condensation (+) and vaporisation (-) rates as a
         //  coefficient to multiply by (1 - alphal) for the condensation rate

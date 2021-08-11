@@ -97,6 +97,11 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::mDotT() const
 	);
 }
 
+Foam::Pair<Foam::tmp<Foam::volScalarField> >
+Foam::phaseChangeTwoPhaseMixtures::Constant::vmDot() const
+{
+}
+
 bool Foam::phaseChangeTwoPhaseMixtures::Constant::read()
 {
     if (phaseChangeTwoPhaseMixture::read())
