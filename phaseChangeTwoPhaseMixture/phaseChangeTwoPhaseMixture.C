@@ -44,6 +44,32 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 :
     thermalIncompressibleTwoPhaseMixture(U, phi),
     phaseChangeTwoPhaseMixtureCoeffs_(subDict(type + "Coeffs")),
+    vmCond_
+    (
+        IOobject
+        (
+            "vmCond",
+            U.time().timeName(),
+            U.db(),
+			IOobject::NO_READ,
+			IOobject::NO_WRITE
+        ),
+        U.mesh(),
+        dimensionedScalar("vmCond", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
+    ),
+    vmEvap_
+    (
+        IOobject
+        (
+            "vmEvap",
+            U.time().timeName(),
+            U.db(),
+			IOobject::NO_READ,
+			IOobject::NO_WRITE
+        ),
+        U.mesh(),
+        dimensionedScalar("vmEvap", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
+    ),
     mCond_
     (
         IOobject

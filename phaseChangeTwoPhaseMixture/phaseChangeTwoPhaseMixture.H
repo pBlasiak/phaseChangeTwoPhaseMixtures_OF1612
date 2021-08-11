@@ -63,6 +63,12 @@ protected:
 
         dictionary phaseChangeTwoPhaseMixtureCoeffs_;
 
+		//- Volumetric condensation mass flux, kg/(m3 s) (+)
+		volScalarField vmCond_;
+		
+		//- Volumetric evaporation mass flux, kg/(m3 s) (-)
+		volScalarField vmEvap_;
+
 		//- Condensation mass flux, kg/s (+)
 		volScalarField mCond_;
 		
@@ -171,6 +177,18 @@ public:
 
     // Member Functions
 
+        //- Return const-access to the volumetric condensation mass flux
+        const volScalarField& vmCond() const
+        {
+            return vmCond_;
+        }
+
+        //- Return const-access to the volumetric evaporation mass flux
+        const volScalarField& vmEvap() const
+        {
+            return vmEvap_;
+        }
+
         //- Return const-access to the condensation mass flux
         const volScalarField& mCond() const
         {
@@ -212,6 +230,10 @@ public:
         {
             return R_;
         }
+
+        //- Return the volumetric mass condensation (+) and vaporisation (-) rates 
+		//  units are kg/(m3 s)
+        virtual Pair<tmp<volScalarField> > vmDot() const = 0;
 
         //- Return the mass condensation (+) and vaporisation (-) rates as a
         //  coefficient to multiply by (1 - alphal) for the condensation rate

@@ -58,6 +58,26 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::Lee
 
 
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
+void Foam::phaseChangeTwoPhaseMixtures::Lee::calcvmDot()
+{
+    vmCond_ = vmDot()[0];
+    vmEvap_ = vmDot()[1];
+}
+
+Foam::Pair<Foam::tmp<Foam::volScalarField> >
+Foam::phaseChangeTwoPhaseMixtures::Lee::vmDot() const
+{
+    const volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
+    const dimensionedScalar T0("0", dimTemperature, 0.0);
+
+    return Pair<tmp<volScalarField> >
+    (
+		// minus sign "-" to provide mc > 0  and mv < 0
+        -neg(T_ - TSat_)*mcCoeff_*(1.0 - limitedAlpha1)*(T_ - TSat_)/TSat_,
+
+        -pos(T_ - TSat_)*mvCoeff_*limitedAlpha1*(T_ - TSat_)/TSat_
+    );
+}
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal() const
@@ -103,6 +123,13 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::mDotT() const
 
         mvCoeff_*limitedAlpha1*pos(T_ - TSat_)/TSat_
     );
+}
+
+void Foam::phaseChangeTwoPhaseMixtures::Lee::correct() 
+{
+	Info<< "Lee correct() " << endl;
+	phaseChangeTwoPhaseMixture::correct();
+    calcvmDot();
 }
 
 bool Foam::phaseChangeTwoPhaseMixtures::Lee::read()

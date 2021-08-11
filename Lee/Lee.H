@@ -69,6 +69,9 @@ class Lee
         dimensionedScalar mcCoeff_;
         dimensionedScalar mvCoeff_;
 
+    // Private member functions
+	
+		void calcvmDot();
 
 public:
 
@@ -94,6 +97,10 @@ public:
     // Member Functions
 	
 
+        //- Return the volumetric mass condensation (+) and vaporisation (-) rates 
+		//  units are kg/(m3 s)
+        virtual Pair<tmp<volScalarField> > vmDot() const;
+
         //- Return the mass condensation (+) and vaporisation (-) rates as a
         //  coefficient to multiply by (1 - alphal) for the condensation rate
         //  and a coefficient to multiply by alphal for the vaporisation rate
@@ -110,6 +117,9 @@ public:
         //  to multiply by (T - TSat) in TEqn
 		//  units are kg/(m3 s K)
         virtual Pair<tmp<volScalarField> > mDotT() const;
+
+        //- Correct the phaseChange model
+        virtual void correct();
 
         //- Read the transportProperties dictionary and update
         virtual bool read();
