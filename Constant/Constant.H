@@ -63,6 +63,10 @@ class Constant
 	    // in kg/(m2 s)
     	dimensionedScalar mCondFlux_;
     	dimensionedScalar mEvapFlux_;
+		
+	    // in kg/(m3 s)
+		volScalarField vmCondFlux_;
+		volScalarField vmEvapFlux_;
 
     // Private member functions
 	
@@ -94,6 +98,16 @@ public:
 
 
     // Member Functions
+	
+		const volScalarField& vmCondFlux()
+		{
+            return vmCondFlux_;
+		}
+
+		const volScalarField& vmEvapFlux()
+		{
+            return vmEvapFlux_;
+		}
 
         //- Return the volumetric mass condensation (+) and vaporisation (-) rates 
 		//  units are kg/(m3 s)
