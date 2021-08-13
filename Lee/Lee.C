@@ -60,48 +60,61 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::Lee
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
-Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal() const
+Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal() 
 {
-    const dimensionedScalar T0("0", dimTemperature, 0.0);
+    //const dimensionedScalar T0("0", dimTemperature, 0.0);
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
+
+	// minus sign "-" to provide mc > 0  and mv < 0
+	mCondNoAlphal_ = -mcCoeff_*neg(T_ - TSat_)*(T_ - TSat_)/TSat_;
+	mEvapNoAlphal_ = -mvCoeff_*pos(T_ - TSat_)*(T_ - TSat_)/TSat_;
+
+	mCondAlphal_   = mCondNoAlphal_*(scalar(1) - limitedAlpha1);
+	mEvapAlphal_   = mEvapNoAlphal_*limitedAlpha1;
+
+	mCondNoTmTSat_ = -mcCoeff_*(scalar(1) - limitedAlpha1)/TSat_;
+	mEvapNoTmTSat_ = -mvCoeff_*limitedAlpha1/TSat_;
 
     return Pair<tmp<volScalarField> >
     (
-		// minus sign "-" to provide mc > 0  and mv < 0
-		-mcCoeff_*min(T_ - TSat_, T0)/TSat_,
-
-		-mvCoeff_*max(T_ - TSat_, T0)/TSat_
+	    mCondNoAlphal_*scalar(),
+		mEvapNoAlphal_*scalar()
     );
 }
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Lee::mDotP() const
 {
-    const volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
-    const dimensionedScalar T0("0", dimTemperature, 0.0);
+    //const volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
+    //const dimensionedScalar T0("0", dimTemperature, 0.0);
 
     return Pair<tmp<volScalarField> >
     (
-		// minus sign "-" to provide mc > 0  and mv < 0
-        -mcCoeff_*(1.0 - limitedAlpha1)*min(T_ - TSat_, T0)/TSat_
-		*pos(p_ - pSat_)/max(p_ - pSat_, 1E-8*pSat_),
+	//	// minus sign "-" to provide mc > 0  and mv < 0
+    //    -mcCoeff_*(1.0 - limitedAlpha1)*min(T_ - TSat_, T0)/TSat_
+	//	*pos(p_ - pSat_)/max(p_ - pSat_, 1E-8*pSat_),
 
-        -mvCoeff_*limitedAlpha1*max(T_ - TSat_, T0)/TSat_
-		*neg(p_ - pSat_)/max(pSat_ - p_, 1E-8*pSat_)
+    //    -mvCoeff_*limitedAlpha1*max(T_ - TSat_, T0)/TSat_
+	//	*neg(p_ - pSat_)/max(pSat_ - p_, 1E-8*pSat_)
+		mCondAlphal_*scalar(1),
+		mEvapAlphal_*scalar(1)
     );
 }
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Lee::mDotT() const
 {
-    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
+    //volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 
     return Pair<tmp<volScalarField> >
     (
 		// minus sign "-" to provide mc > 0  
 		// now also mv > 0 but in TEqn, term (mc - mv) is applied
-        -mcCoeff_*(1.0 - limitedAlpha1)*neg(T_ - TSat_)/TSat_,
+        //-mcCoeff_*(1.0 - limitedAlpha1)*neg(T_ - TSat_)/TSat_,
+        //mvCoeff_*limitedAlpha1*pos(T_ - TSat_)/TSat_
 
-        mvCoeff_*limitedAlpha1*pos(T_ - TSat_)/TSat_
+		-mCondNoTmTSat_*scalar(1),
+		-mEvapNoTmTSat_*scalar(1)
     );
 }
 

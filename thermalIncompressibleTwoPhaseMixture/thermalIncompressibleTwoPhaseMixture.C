@@ -69,14 +69,8 @@ Foam::thermalIncompressibleTwoPhaseMixture::thermalIncompressibleTwoPhaseMixture
         "cp2",
         dimEnergy/dimTemperature/dimMass,
         subDict(phase2Name_).lookup("cp")
-    )//,
+    )
 
-   // hEvap_
-   // (
-   //     "hEvap",
-   //     dimEnergy/dimMass,
-   //     subDict(phase2Name_).lookup("hEvap")
-   // )
 {
 
 }

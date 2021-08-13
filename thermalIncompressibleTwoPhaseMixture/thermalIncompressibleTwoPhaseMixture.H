@@ -63,7 +63,6 @@ protected:
         dimensionedScalar cp1_;
         dimensionedScalar cp2_;
 
-//        dimensionedScalar hEvap_;
 
 
 public:
