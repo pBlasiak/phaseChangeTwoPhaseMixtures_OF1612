@@ -43,7 +43,21 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 )
 :
     thermalIncompressibleTwoPhaseMixture(U, phi),
-    phaseChangeTwoPhaseMixtureCoeffs_(subDict(type + "Coeffs")),
+    //phaseChangeTwoPhaseMixtureCoeffs_(subDict(type + "Coeffs")),
+    phaseChangeTwoPhaseMixtureCoeffs_
+	(
+	    IOdictionary
+	    (
+	        IOobject
+            (
+                "phaseChangeProperties", // dictionary name
+                U.time().constant(),     // dict is found in "constant"
+                U.db(),                  // registry for the dict
+                IOobject::MUST_READ,     // must exist, otherwise failure
+                IOobject::NO_WRITE       // dict is only read by the solver
+            )
+	    )
+	),
     mCond_
     (
         IOobject
@@ -95,6 +109,58 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 	    ),
 	    U.mesh(),
 	    dimensionedScalar("mEvapAlphal", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
+	),
+	mCondNoAlphal_
+	(
+	    IOobject
+	    (
+	        "mCondNoAlphal",
+	        U.time().timeName(),
+	        U.db(),
+			IOobject::NO_READ,
+			IOobject::NO_WRITE
+	    ),
+	    U.mesh(),
+	    dimensionedScalar("mCondNoAlphal", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
+	),
+	mEvapNoAlphal_
+	(
+	    IOobject
+	    (
+	        "mEvapNoAlphal",
+	        U.time().timeName(),
+	        U.db(),
+			IOobject::NO_READ,
+			IOobject::NO_WRITE
+	    ),
+	    U.mesh(),
+	    dimensionedScalar("mEvapNoAlphal", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
+	),
+	mCondNoTmTSat_
+	(
+	    IOobject
+	    (
+	        "mCondNoTmTSat",
+	        U.time().timeName(),
+	        U.db(),
+			IOobject::NO_READ,
+			IOobject::NO_WRITE
+	    ),
+	    U.mesh(),
+	    dimensionedScalar("mCondNoTmTSat", dimensionSet(1, -3, -1, -1, 0, 0, 0), 0.0)
+	),
+	mEvapNoTmTSat_
+	(
+	    IOobject
+	    (
+	        "mEvapNoTmTSat",
+	        U.time().timeName(),
+	        U.db(),
+			IOobject::NO_READ,
+			IOobject::NO_WRITE
+	    ),
+	    U.mesh(),
+	    dimensionedScalar("mEvapNoTmTSat", dimensionSet(1, -3, -1, -1, 0, 0, 0), 0.0)
 	),
 	mCondP_
 	(
@@ -150,7 +216,7 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
 	),
 	p_(U.db().lookupObject<volScalarField>("p")),
 	T_(U.db().lookupObject<volScalarField>("T")),
-    TSatG_("TSatGlobal", dimTemperature, lookup("TSatGlobal")),
+    TSatG_("TSatGlobal", dimTemperature, phaseChangeTwoPhaseMixtureCoeffs_.lookup("TSatGlobal")),
     TSat_
     (
         IOobject
@@ -164,11 +230,11 @@ Foam::phaseChangeTwoPhaseMixture::phaseChangeTwoPhaseMixture
         U.mesh(),
 		TSatG_
     ),
-    pSat_("pSat", dimPressure, lookup("pSat")),
-    hEvap_("hEvap", dimEnergy/dimMass, lookup("hEvap")),
-    R_("R", dimGasConstant, lookup("R")),
-    TSatLocalPressure_(readBool(lookup("TSatLocalPressure"))),
-	printPhaseChange_(readBool(lookup("printPhaseChange")))
+    pSat_("pSat", dimPressure, phaseChangeTwoPhaseMixtureCoeffs_.lookup("pSat")),
+    hEvap_("hEvap", dimEnergy/dimMass, phaseChangeTwoPhaseMixtureCoeffs_.lookup("hEvap")),
+    R_("R", dimGasConstant, phaseChangeTwoPhaseMixtureCoeffs_.lookup("R")),
+    TSatLocalPressure_(readBool(phaseChangeTwoPhaseMixtureCoeffs_.lookup("TSatLocalPressure"))),
+	printPhaseChange_(readBool(phaseChangeTwoPhaseMixtureCoeffs_.lookup("printPhaseChange")))
 {
 	Info<< "TSatGlobal = "				<< TSatG_ << endl;
 	Info<< "pSat = "		  			<< pSat_ << endl;
@@ -208,24 +274,28 @@ Foam::phaseChangeTwoPhaseMixture::vDotAlphal()
 }
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
-Foam::phaseChangeTwoPhaseMixture::vDotT() const
-{
-	   Pair<tmp<volScalarField> > mDotT = this->mDotT();
-
-	   return Pair<tmp<volScalarField> >
-	   (
-	   		hEvap_*mDotT[0],
-	   		hEvap_*mDotT[1]
-	   );
-}
-
-Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixture::vDotP() const
 {
     dimensionedScalar pCoeff(1.0/rho1() - 1.0/rho2());
     Pair<tmp<volScalarField> > mDotP = this->mDotP();
 
-    return Pair<tmp<volScalarField> >(pCoeff*mDotP[0], pCoeff*mDotP[1]);
+    return Pair<tmp<volScalarField> >
+	(
+	    pCoeff*mDotP[0], 
+		pCoeff*mDotP[1]
+	);
+}
+
+Foam::Pair<Foam::tmp<Foam::volScalarField> >
+Foam::phaseChangeTwoPhaseMixture::vDotT() const
+{
+	Pair<tmp<volScalarField> > mDotT = this->mDotT();
+
+	return Pair<tmp<volScalarField> >
+	(
+			hEvap_*mDotT[0],
+			hEvap_*mDotT[1]
+	);
 }
 
 void Foam::phaseChangeTwoPhaseMixture::correct()
@@ -238,6 +308,7 @@ void Foam::phaseChangeTwoPhaseMixture::correct()
 	// prawdopodobnie jest zle liczone mCond_ i mEvap
 	// raczej powinno byc policzone bez internalField 
 	// ewentualnie dodac boundaryField
+	// ZOBACZYC JAK JEST w interThermalPhaseChangeFoam
     mCond_.ref() = mDotAlphal()[0]().internalField()*(1.0 - limitedAlpha1.internalField())*mesh.V();
     mEvap_.ref() = mDotAlphal()[1]().internalField()*limitedAlpha1.internalField()*mesh.V();
 

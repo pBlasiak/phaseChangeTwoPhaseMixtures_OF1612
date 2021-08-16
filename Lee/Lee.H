@@ -99,7 +99,7 @@ public:
         //  and a coefficient to multiply by alphal for the vaporisation rate
 		//  in alphaEqn 
 		//  units are kg/(m3 s)
-        virtual Pair<tmp<volScalarField> > mDotAlphal() const;
+        virtual Pair<tmp<volScalarField> > mDotAlphal();
 
         //- Return the mass condensation (+) and vaporisation (-) rates as coefficients
         //  to multiply by (p - pSat) in pEqn

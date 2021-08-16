@@ -47,13 +47,16 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::Lee
 :
     phaseChangeTwoPhaseMixture(typeName, U, phi),
 
-    Cc_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("Cc")),
-    Cv_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("Cv")),
+    Cc_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("Cc")),
+    Cv_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("Cv")),
 
     mcCoeff_(Cc_*rho2()),
     mvCoeff_(Cv_*rho1())
 {
 	//TODO: sprawdz czy model jest w solverze korektowany
+	Info<< "Phase change relaxation time factors for the Lee model:\n" 
+		<< "Cc = " << Cc_ << endl
+		<< "Cv = " << Cv_ << endl;
 }
 
 
@@ -77,8 +80,8 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal()
 
     return Pair<tmp<volScalarField> >
     (
-	    mCondNoAlphal_*scalar(),
-		mEvapNoAlphal_*scalar()
+	    mCondNoAlphal_*scalar(1),
+		mEvapNoAlphal_*scalar(1)
     );
 }
 

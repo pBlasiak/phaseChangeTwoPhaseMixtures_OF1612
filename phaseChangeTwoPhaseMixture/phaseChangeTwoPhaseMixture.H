@@ -229,18 +229,20 @@ public:
         //  and a coefficient to multiply by alphal for the vaporisation rate
 		//  in alphaEqn. 
 		//  In this function the mass transfer model should be implemented
-		//  without alphal and (1 - alphal) terms included. If they are not
-		//  present in the model, the equations should be divided by these terms.
+		//  without alphal and (1 - alphal) terms included and stored in 
+		//  mCondNoAlphal_ and mEvapNoAlphal_ variables.
 		//  units are kg/(m3 s)
 		//
 		//  Algorithm used in interBoilCondFoam: 
 		//  1) calculate volumetric mass fluxes in alphaEqn.H that are:
 		//     i) multiplied by (1-alphal) for condensation and by alphal for
-		//        evaporation and store them
+		//        evaporation and store them in mCondNoAlphal_ and mEvapNoAlphal_ 
 		//     ii) store also volumetric mass fluxes multiplied by current alphal
+		//         in mCondAlphal_ and mEvapAlphal_
 		//     iii) store also volumetric mass fluxes that are multiplied by (T-TSat) in TEqn
-		//     (these all fluxes can be considered as from previous time-step 
-		//     because they are calculate based on alphal and T from previous time-step)
+		//          in mCondNoTmTSat_ and mEvapNoTmTSat_
+		//     These all fluxes can be considered as from previous time-step 
+		//     because they are calculate based on alphal and T from previous time-step
 		//  2) use these fluxes to calculate new alphal field in alphaEqn
 		//  3) if momentumPredictor is on in UEqn, calculate new U based on new alphal
 		//  4) in TEqn calculate new T based on new alphal but using the stored mass fluxes
@@ -248,23 +250,31 @@ public:
 		//  6) go to next PIMPLE iteration or time-step and start from 1)
         virtual Pair<tmp<volScalarField> > mDotAlphal() = 0;
 
+        //- Return the volumetric mass condensation (+) and vaporisation (-) rates as coefficients
+		//  to multiply in pEqn
+		//  units are kg/(m3 s)
+        virtual Pair<tmp<volScalarField> > mDotP() const = 0;
+
         //- Return the mass condensation (-) and vaporisation (+) rates as coefficients
         //  to multiply by (T - TSat) in TEqn
 		//  units are kg/(m3 s K)
         virtual Pair<tmp<volScalarField> > mDotT() const = 0;
 
-        //- Return the volumetric condensation and vaporisation rates as a
-        //  coefficient to multiply by (1 - alphal) for the condensation rate
+        //- Return the volumetric mass condensation (+) and vaporisation (-) rates 
+		//  as a coefficient to multiply by (1 - alphal) for the condensation rate
         //  and a coefficient to multiply by alphal for the vaporisation rate
-		//  in alphaEqn
+		//  in alphaEqn. 
 		//  units are 1/s
         Pair<tmp<volScalarField> > vDotAlphal();
 
-        //- Return the volumetric condensation and vaporisation rates in pEqn
+        //- Return the volumetric mass condensation (+) and vaporisation (-) rates as coefficients
+		//  to multiply in pEqn
+		//  units are 1/s
         Pair<tmp<volScalarField> > vDotP() const;
 		
-        //- Return the volumetric condensation and vaporisation rates as
-        //  coefficients to multiply by (T - TSat) in TEqn
+        //- Return the mass condensation (-) and vaporisation (+) rates as coefficients
+        //  to multiply by (T - TSat) in TEqn
+		//  units are kg/(m s3 K)
         Pair<tmp<volScalarField> > vDotT() const;
 
         //- Correct the phaseChange model

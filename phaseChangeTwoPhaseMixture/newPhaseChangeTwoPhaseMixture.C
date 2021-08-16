@@ -35,11 +35,11 @@ Foam::phaseChangeTwoPhaseMixture::New
     const surfaceScalarField& phi
 )
 {
-    IOdictionary transportPropertiesDict
+    IOdictionary phaseChangePropertiesDict
     (
         IOobject
         (
-            "transportProperties",
+            "phaseChangeProperties",
             U.time().constant(),
             U.db(),
             IOobject::MUST_READ,
@@ -50,7 +50,7 @@ Foam::phaseChangeTwoPhaseMixture::New
 
     word phaseChangeTwoPhaseMixtureTypeName
     (
-        transportPropertiesDict.lookup("phaseChangeTwoPhaseMixture")
+        phaseChangePropertiesDict.lookup("phaseChangeTwoPhaseMixture")
     );
 
     Info<< "Selecting phaseChange model "
