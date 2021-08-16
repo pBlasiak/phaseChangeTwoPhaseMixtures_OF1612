@@ -53,7 +53,6 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::Lee
     mcCoeff_(Cc_*rho2()),
     mvCoeff_(Cv_*rho1())
 {
-	//TODO: sprawdz czy model jest w solverze korektowany
 	Info<< "Phase change relaxation time factors for the Lee model:\n" 
 		<< "Cc = " << Cc_ << endl
 		<< "Cv = " << Cv_ << endl;
@@ -75,8 +74,12 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal()
 	mCondAlphal_   = mCondNoAlphal_*(scalar(1) - limitedAlpha1);
 	mEvapAlphal_   = mEvapNoAlphal_*limitedAlpha1;
 
-	mCondNoTmTSat_ = -mcCoeff_*(scalar(1) - limitedAlpha1)/TSat_;
-	mEvapNoTmTSat_ = -mvCoeff_*limitedAlpha1/TSat_;
+	// plus sign to provide mc < 0  and mv > 0
+	mCondNoTmTSat_ = -mcCoeff_*neg(T_ - TSat_)*(scalar(1) - limitedAlpha1)/TSat_;
+	mEvapNoTmTSat_ = -mvCoeff_*pos(T_ - TSat_)*limitedAlpha1/TSat_;
+
+	//Info<< "mCondNoAlphal_ = " << mCondNoAlphal_ << endl;
+	//Info<< "mCondNoTmTSat_ = " << mCondNoTmTSat_ << endl;
 
     return Pair<tmp<volScalarField> >
     (
@@ -116,8 +119,8 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::mDotT() const
         //-mcCoeff_*(1.0 - limitedAlpha1)*neg(T_ - TSat_)/TSat_,
         //mvCoeff_*limitedAlpha1*pos(T_ - TSat_)/TSat_
 
-		-mCondNoTmTSat_*scalar(1),
-		-mEvapNoTmTSat_*scalar(1)
+		mCondNoTmTSat_*scalar(1),
+		mEvapNoTmTSat_*scalar(1)
     );
 }
 

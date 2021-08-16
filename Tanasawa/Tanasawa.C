@@ -50,9 +50,9 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::Tanasawa
 :
     phaseChangeTwoPhaseMixture(typeName, U, phi),
 
-    cond_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("condensation")),
-    evap_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("evaporation")),
-    gamma_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("gamma")),
+    cond_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("condensation")),
+    evap_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("evaporation")),
+    gamma_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("gamma")),
 	// czy nie powinno byc dla wrzenia mnozone przez rho1?
 	// czyli czy nie powinno byc mvCoeff i mlCoeff?
    	mCoeff_(2.0*gamma_/(2.0 - gamma_)/sqrt(2.0*M_PI*R_)*hEvap_*rho2())
@@ -72,9 +72,28 @@ Foam ::volScalarField Foam::phaseChangeTwoPhaseMixtures::Tanasawa::calcGradAlpha
 }
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
-Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal() const
+Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 {
     const dimensionedScalar T0("0", dimTemperature, 0.0);
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
+	volScalarField gradAlphal = mag(fvc::grad(limitedAlpha1));
+
+	// minus sign "-" to provide mc > 0  and mv < 0
+	mCondNoAlphal_ = -mCoeff_*neg(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
+	mEvapNoAlphal_ = -mCoeff_*pos(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
+
+	// in Tanasawa model there is now alpha term
+	// probably it should be divided here by alphal and (1-alphal) but it
+	// could produce errrors
+	// IT SHOULD BE CHECKED LATER WHEN ALGORITHM WORKS WELL
+	mCondAlphal_   = mCondNoAlphal_;
+	mEvapAlphal_   = mEvapNoAlphal_;
+
+	// plus sign to provide mc < 0  and mv > 0
+	mCondNoTmTSat_ = -mCoeff_*neg(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
+	mEvapNoTmTSat_ = -mCoeff_*pos(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
+	//Info<< "mCondNoAlphal_ = " << mCondNoAlphal_ << endl;
+	//Info<< "mCondNoTmTSat_ = " << mCondNoTmTSat_ << endl;
 
 	if (cond_ && evap_)
 	{
@@ -82,6 +101,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal() const
 		(
 			-mCoeff_*min(T_ - TSat_ ,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0)),
 			-mCoeff_*max(T_ - TSat_ ,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0)) 
+	        //mCondNoAlphal_*scalar(1),
+		    //mEvapNoAlphal_*scalar(1)
 		);
 	}
 	else if (cond_)
@@ -90,6 +111,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal() const
 		(
 			-mCoeff_*min(T_ - TSat_ ,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0)),
 			mEvapAlphal_*scalar(0)
+	        //mCondNoAlphal_*scalar(1),
+		    //mEvapNoAlphal_*scalar(0)
 		);
 	}
 	else if (evap_)
@@ -98,6 +121,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal() const
 		(
 			mCondAlphal_*scalar(0),
 			-mCoeff_*max(T_ - TSat_ ,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
+	        //mCondNoAlphal_*scalar(0),
+		    //mEvapNoAlphal_*scalar(1)
 		);
 	}
 	else 
@@ -106,6 +131,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal() const
 		(
 			mCondAlphal_*scalar(0),
 			mEvapAlphal_*scalar(0)
+	        //mCondNoAlphal_*scalar(0),
+		    //mEvapNoAlphal_*scalar(0)
 		);
 	}
 }
@@ -120,10 +147,12 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 	{
 		return Pair<tmp<volScalarField> >
 		(
-			-mCoeff_*min(T_ - TSat_,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
-						*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*(1.0-limitedAlpha1),
+			-mCoeff_*min(T_ - TSat_,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0)),
+			//			*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*(1.0-limitedAlpha1),
 			-mCoeff_*max(T_ - TSat_,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
-						*neg(p_-pSat_)/max(pSat_-p_,1E-05*pSat_)*limitedAlpha1 
+			//			*neg(p_-pSat_)/max(pSat_-p_,1E-05*pSat_)*limitedAlpha1 
+	        //mCondAlphal_*scalar(1),
+		    //mEvapAlphal_*scalar(1)
 		);
 	}
 	else if (cond_)
@@ -133,6 +162,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 			-mCoeff_*min(T_ - TSat_,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
 						*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*(1.0-limitedAlpha1),
 			mEvapP_*scalar(0)
+	        //mCondAlphal_*scalar(1),
+		    //mEvapAlphal_*scalar(0)
 		);
 	}
 	else if (evap_)
@@ -141,7 +172,9 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 		(
 			mCondP_*scalar(0),
 			-mCoeff_*max(T_ - TSat_,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
-						*neg(p_-pSat_)/max(pSat_-p_,1E-05*pSat_)*limitedAlpha1
+			//			*neg(p_-pSat_)/max(pSat_-p_,1E-05*pSat_)*limitedAlpha1
+	        //mCondAlphal_*scalar(0),
+		    //mEvapAlphal_*scalar(1)
 		);
 	}
 	else 
@@ -150,6 +183,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 		(
 			mCondP_*scalar(0),
 			mEvapP_*scalar(0)
+	        //mCondAlphal_*scalar(0),
+		    //mEvapAlphal_*scalar(0)
 		);
 	}
 }
@@ -167,6 +202,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotT() const
 						*neg(T_ - TSat_)*(1.0-limitedAlpha1),
 			mCoeff_*calcGradAlphal()/sqrt(pow(TSat_,3.0))
 						*limitedAlpha1*pos(T_ - TSat_) 
+		    //mCondNoTmTSat_*scalar(1),
+		    //mEvapNoTmTSat_*scalar(1)
 		);
 	}
 	else if (cond_)
@@ -176,6 +213,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotT() const
 			-mCoeff_*calcGradAlphal()/sqrt(pow(TSat_,3.0))
 						*neg(T_ - TSat_)*(1.0-limitedAlpha1),
 			mEvapT_*scalar(0)
+		    //mCondNoTmTSat_*scalar(1),
+		    //mEvapNoTmTSat_*scalar(0)
 		);
 	}
 	else if (evap_)
@@ -185,6 +224,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotT() const
 			mCondT_*scalar(0),
 			mCoeff_*calcGradAlphal()/sqrt(pow(TSat_,3.0))
 						*limitedAlpha1*pos(T_ - TSat_)
+		    //mCondNoTmTSat_*scalar(0),
+		    //mEvapNoTmTSat_*scalar(1)
 		);
 	}
 	else
@@ -193,6 +234,8 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotT() const
 		(
 			mCondT_*scalar(0),
 			mEvapT_*scalar(0)
+		    //mCondNoTmTSat_*scalar(0),
+		    //mEvapNoTmTSat_*scalar(0)
 		);
 	}
 }
