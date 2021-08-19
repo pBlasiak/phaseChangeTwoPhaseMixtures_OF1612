@@ -86,11 +86,11 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 	// probably it should be divided here by alphal and (1-alphal) but it
 	// could produce errrors
 	// IT SHOULD BE CHECKED LATER WHEN ALGORITHM WORKS WELL
-	mCondAlphal_   = mCondNoAlphal_;
+	mCondAlphal_   = mCondNoAlphal_*(1-limitedAlpha1);
 	mEvapAlphal_   = mEvapNoAlphal_;
 
 	// minus sign to provide mc > 0  and mv > 0
-	mCondNoTmTSat_ = -mCoeff_*neg(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
+	mCondNoTmTSat_ = -mCoeff_*neg(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0))*(1-limitedAlpha1);
 	mEvapNoTmTSat_ =  mCoeff_*pos(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
 	//Info<< "mCondNoAlphal_ = " << mCondNoAlphal_ << endl;
 	//Info<< "mCondNoTmTSat_ = " << mCondNoTmTSat_ << endl;
@@ -161,9 +161,11 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 		(
 		//	-mCoeff_*min(T_ - TSat_,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
 		//				*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*(1.0-limitedAlpha1),
-		//	mEvapP_*scalar(0)
-	        mCondAlphal_*scalar(1),
-		    mEvapAlphal_*scalar(0)
+
+	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),//*(1.0-limitedAlpha1),
+			mEvapP_*scalar(0)
+	//        mCondAlphal_*scalar(1),
+	//	    mEvapAlphal_*scalar(0)
 		);
 	}
 	else if (evap_)
