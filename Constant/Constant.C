@@ -50,12 +50,40 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::Constant
 :
     phaseChangeTwoPhaseMixture(typeName, U, phi),
 
-    mCondFlux_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("condMassFlux")),
-    mEvapFlux_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("evapMassFlux"))
+    mCondFlux_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("condMassFlux")),
+    mEvapFlux_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("evapMassFlux")),
+    vmCondFlux_
+    (
+        IOobject
+        (
+            "vmCondFlux",
+            U.time().timeName(),
+            U.db(),
+			IOobject::NO_READ,
+			IOobject::NO_WRITE
+        ),
+        U.mesh(),
+        dimensionedScalar("vmCondFlux", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
+    ),
+    vmEvapFlux_
+    (
+        IOobject
+        (
+            "vmEvapFlux",
+            U.time().timeName(),
+            U.db(),
+			IOobject::NO_READ,
+			IOobject::NO_WRITE
+        ),
+        U.mesh(),
+        dimensionedScalar("vmEvapFlux", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
+    )
 {
 	Info<< "Constant model settings:  " << endl;
 	Info<< "Condensation mass flow rate per unit area: " << mCondFlux_ << endl;
 	Info<< "Evaporation mass flow rate per unit area: "  << mEvapFlux_ << endl;
+	vmCondFlux_ = mCondFlux_*calcGradAlphal();
+	vmEvapFlux_ = mEvapFlux_*calcGradAlphal();
 }
 
 
@@ -67,13 +95,13 @@ Foam ::volScalarField Foam::phaseChangeTwoPhaseMixtures::Constant::calcGradAlpha
 }
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
-Foam::phaseChangeTwoPhaseMixtures::Constant::mDotAlphal() const
+Foam::phaseChangeTwoPhaseMixtures::Constant::mDotAlphal() 
 {
 
 	return Pair<tmp<volScalarField> >
 	(
-		mCondFlux_*calcGradAlphal(),
-	   -mEvapFlux_*calcGradAlphal()
+		vmCondFlux_*scalar(1),
+	   -vmEvapFlux_*scalar(1) 
 	);
 }
 
@@ -82,20 +110,30 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::mDotP() const
 {
 	return Pair<tmp<volScalarField> >
 	(
-		mCondFlux_*calcGradAlphal()*pos(p_ - pSat_)/max(p_-pSat_,1E-6*pSat_),
-	   -mEvapFlux_*calcGradAlphal()*neg(p_ - pSat_)/max(pSat_-p_,1E-6*pSat_)
+//		vmCondFlux_*pos(p_ - pSat_)/max(p_-pSat_,1E-6*pSat_),
+//	    vmEvapFlux_*neg(p_ - pSat_)/max(pSat_-p_,1E-6*pSat_)
+    	vmCondFlux_*scalar(1),
+       -vmEvapFlux_*scalar(1)
 	);
 }
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Constant::mDotT() const
 {
+	Info<< "vmEvapFlux_ = " << vmEvapFlux_ << endl;
 	return Pair<tmp<volScalarField> >
 	(
-		-mCondFlux_*calcGradAlphal()*neg(T_ - TSat_)/max(TSat_ - T_,1E-6*TSat_),
-	     mEvapFlux_*calcGradAlphal()*pos(T_ - TSat_)/max(T_ - TSat_,1E-6*TSat_)
+		-vmCondFlux_*neg(T_ - TSat_)/max(TSat_ - T_,1E-6*TSat_),
+	     vmEvapFlux_*pos(T_ - TSat_)/max(T_ - TSat_,1E-6*TSat_)
+		//-vmCondFlux_*scalar(1),
+	    // vmEvapFlux_*scalar(1)
 	);
 }
+
+//Foam::Pair<Foam::tmp<Foam::volScalarField> >
+//Foam::phaseChangeTwoPhaseMixtures::Constant::vmDot() const
+//{
+//}
 
 bool Foam::phaseChangeTwoPhaseMixtures::Constant::read()
 {
@@ -104,6 +142,10 @@ bool Foam::phaseChangeTwoPhaseMixtures::Constant::read()
         phaseChangeTwoPhaseMixtureCoeffs_ = subDict(type() + "Coeffs");
         phaseChangeTwoPhaseMixtureCoeffs_.lookup("condMassFlux") >> mCondFlux_;
         phaseChangeTwoPhaseMixtureCoeffs_.lookup("evapMassFlux") >> mEvapFlux_;
+
+		// to raczej nie jest dobrze
+        vmCondFlux_ = mCondFlux_*calcGradAlphal();
+	    vmEvapFlux_ = mEvapFlux_*calcGradAlphal();
 
         return true;
     }
