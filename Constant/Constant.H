@@ -64,10 +64,6 @@ class Constant
     	dimensionedScalar mCondFlux_;
     	dimensionedScalar mEvapFlux_;
 		
-	    // in kg/(m3 s)
-		volScalarField vmCondFlux_;
-		volScalarField vmEvapFlux_;
-
     // Private member functions
 	
         // moze przeniesc ta funkcje do phaseChangeTwoPhaseMixture
@@ -99,16 +95,6 @@ public:
 
     // Member Functions
 	
-		const volScalarField& vmCondFlux()
-		{
-            return vmCondFlux_;
-		}
-
-		const volScalarField& vmEvapFlux()
-		{
-            return vmEvapFlux_;
-		}
-
         //- Return the volumetric mass condensation (+) and vaporisation (-) rates 
 		//  as a coefficient to multiply by (1 - alphal) for the condensation rate
         //  and a coefficient to multiply by alphal for the vaporisation rate

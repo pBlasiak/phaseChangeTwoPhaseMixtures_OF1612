@@ -82,16 +82,18 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 	mCondNoAlphal_ = -mCoeff_*neg(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
 	mEvapNoAlphal_ = -mCoeff_*pos(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
 
-	// in Tanasawa model there is now alpha term
+	// In Tanasawa model there is now alpha term
 	// probably it should be divided here by alphal and (1-alphal) but it
-	// could produce errrors
-	// IT SHOULD BE CHECKED LATER WHEN ALGORITHM WORKS WELL
+	// could produce errrors. To avoid this and follow the algorithm in alphaEqn.H
+	// the modified Tanasawa model is implemented with additional multiplication
+	// by (1-alphal) for condensation and alphal for evaporation.
+	// Thus, the terms in pEqn and TEqn have to be also multiplied by these terms.
 	mCondAlphal_   = mCondNoAlphal_*(1-limitedAlpha1);
-	mEvapAlphal_   = mEvapNoAlphal_;
+	mEvapAlphal_   = mEvapNoAlphal_*limitedAlpha1;
 
 	// minus sign to provide mc > 0  and mv > 0
 	mCondNoTmTSat_ = -mCoeff_*neg(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0))*(1-limitedAlpha1);
-	mEvapNoTmTSat_ =  mCoeff_*pos(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
+	mEvapNoTmTSat_ =  mCoeff_*pos(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0))*limitedAlpha1;
 	//Info<< "mCondNoAlphal_ = " << mCondNoAlphal_ << endl;
 	//Info<< "mCondNoTmTSat_ = " << mCondNoTmTSat_ << endl;
 
@@ -163,9 +165,9 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 		//				*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*(1.0-limitedAlpha1),
 
 	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),//*(1.0-limitedAlpha1),
-			mEvapP_*scalar(0)
+			//mEvapP_*scalar(0)
 	//        mCondAlphal_*scalar(1),
-	//	    mEvapAlphal_*scalar(0)
+		    mEvapAlphal_*scalar(0)
 		);
 	}
 	else if (evap_)
@@ -175,8 +177,9 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 	//		mCondP_*scalar(0),
 	//		-mCoeff_*max(T_ - TSat_,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
 	//		//			*neg(p_-pSat_)/max(pSat_-p_,1E-05*pSat_)*limitedAlpha1
-	        mCondAlphal_*scalar(0),
+	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*scalar(0),
 		    mEvapAlphal_*scalar(1)
+					//	*neg(p_-pSat_)/max(pSat_-p_,1E-05*pSat_)
 		);
 	}
 	else 

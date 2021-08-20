@@ -51,39 +51,26 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::Constant
     phaseChangeTwoPhaseMixture(typeName, U, phi),
 
     mCondFlux_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("condMassFlux")),
-    mEvapFlux_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("evapMassFlux")),
-    vmCondFlux_
-    (
-        IOobject
-        (
-            "vmCondFlux",
-            U.time().timeName(),
-            U.db(),
-			IOobject::NO_READ,
-			IOobject::NO_WRITE
-        ),
-        U.mesh(),
-        dimensionedScalar("vmCondFlux", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
-    ),
-    vmEvapFlux_
-    (
-        IOobject
-        (
-            "vmEvapFlux",
-            U.time().timeName(),
-            U.db(),
-			IOobject::NO_READ,
-			IOobject::NO_WRITE
-        ),
-        U.mesh(),
-        dimensionedScalar("vmEvapFlux", dimensionSet(1, -3, -1, 0, 0, 0, 0), 0.0)
-    )
+    mEvapFlux_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("evapMassFlux"))
 {
 	Info<< "Constant model settings:  " << endl;
 	Info<< "Condensation mass flow rate per unit area: " << mCondFlux_ << endl;
 	Info<< "Evaporation mass flow rate per unit area: "  << mEvapFlux_ << endl;
-	vmCondFlux_ = mCondFlux_*calcGradAlphal();
-	vmEvapFlux_ = mEvapFlux_*calcGradAlphal();
+	
+    const dimensionedScalar T1("1K", dimTemperature, 1.0);
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
+	volScalarField gradAlphal = mag(fvc::grad(limitedAlpha1));
+
+	// minus sign "-" to provide mc > 0  and mv < 0
+    mCondNoAlphal_ =  mCondFlux_*gradAlphal*pos(1-limitedAlpha1)/max(1-limitedAlpha1, 1.0);
+    mEvapNoAlphal_ = -mEvapFlux_*gradAlphal*pos(limitedAlpha1)/max(limitedAlpha1, 1.0);
+
+	mCondAlphal_   = mCondNoAlphal_;//*(1-limitedAlpha1);
+	mEvapAlphal_   = mEvapNoAlphal_;//*limitedAlpha1;
+
+	// minus sign to provide mc > 0  and mv > 0
+	mCondNoTmTSat_ =  mCondAlphal_/T1;
+	mEvapNoTmTSat_ = -mEvapAlphal_/T1;
 }
 
 
@@ -97,11 +84,10 @@ Foam ::volScalarField Foam::phaseChangeTwoPhaseMixtures::Constant::calcGradAlpha
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Constant::mDotAlphal() 
 {
-
 	return Pair<tmp<volScalarField> >
 	(
-		vmCondFlux_*scalar(1),
-	   -vmEvapFlux_*scalar(1) 
+		mCondNoAlphal_*scalar(1),
+	    mEvapNoAlphal_*scalar(1) 
 	);
 }
 
@@ -110,30 +96,25 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::mDotP() const
 {
 	return Pair<tmp<volScalarField> >
 	(
-//		vmCondFlux_*pos(p_ - pSat_)/max(p_-pSat_,1E-6*pSat_),
-//	    vmEvapFlux_*neg(p_ - pSat_)/max(pSat_-p_,1E-6*pSat_)
-    	vmCondFlux_*scalar(1),
-       -vmEvapFlux_*scalar(1)
+		mCondAlphal_*scalar(1)*pos(p_ - pSat_)/max(p_-pSat_,1E-6*pSat_),
+	    mEvapAlphal_*scalar(1)//*neg(p_ - pSat_)/max(pSat_-p_,1E-6*pSat_)
+//    	vmCondFlux_*scalar(1),
+//       -vmEvapFlux_*scalar(1)
 	);
 }
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Constant::mDotT() const
 {
-	Info<< "vmEvapFlux_ = " << vmEvapFlux_ << endl;
+    const dimensionedScalar T1("1K", dimTemperature, 1.0);
 	return Pair<tmp<volScalarField> >
 	(
-		-vmCondFlux_*neg(T_ - TSat_)/max(TSat_ - T_,1E-6*TSat_),
-	     vmEvapFlux_*pos(T_ - TSat_)/max(T_ - TSat_,1E-6*TSat_)
+		 mCondNoTmTSat_*neg(T_ - TSat_)/max(TSat_ - T_,1E-6*TSat_)*T1,
+	     mEvapNoTmTSat_*pos(T_ - TSat_)/max(T_ - TSat_,1E-6*TSat_)*T1
 		//-vmCondFlux_*scalar(1),
 	    // vmEvapFlux_*scalar(1)
 	);
 }
-
-//Foam::Pair<Foam::tmp<Foam::volScalarField> >
-//Foam::phaseChangeTwoPhaseMixtures::Constant::vmDot() const
-//{
-//}
 
 bool Foam::phaseChangeTwoPhaseMixtures::Constant::read()
 {
@@ -144,8 +125,8 @@ bool Foam::phaseChangeTwoPhaseMixtures::Constant::read()
         phaseChangeTwoPhaseMixtureCoeffs_.lookup("evapMassFlux") >> mEvapFlux_;
 
 		// to raczej nie jest dobrze
-        vmCondFlux_ = mCondFlux_*calcGradAlphal();
-	    vmEvapFlux_ = mEvapFlux_*calcGradAlphal();
+        //vmCondFlux_ = mCondFlux_*calcGradAlphal();
+	    //vmEvapFlux_ = mEvapFlux_*calcGradAlphal();
 
         return true;
     }
