@@ -55,18 +55,18 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::Constant
 {
 	Info<< "Constant model settings:  " << endl;
 	Info<< "Condensation mass flow rate per unit area: " << mCondFlux_ << endl;
-	Info<< "Evaporation mass flow rate per unit area: "  << mEvapFlux_ << endl;
+	Info<< "Evaporation  mass flow rate per unit area: "  << mEvapFlux_ << endl;
 	
     const dimensionedScalar T1("1K", dimTemperature, 1.0);
     volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 	volScalarField gradAlphal = mag(fvc::grad(limitedAlpha1));
 
 	// minus sign "-" to provide mc > 0  and mv < 0
-    mCondNoAlphal_ =  mCondFlux_*gradAlphal*pos(1-limitedAlpha1)/max(1-limitedAlpha1, 1.0);
-    mEvapNoAlphal_ = -mEvapFlux_*gradAlphal*pos(limitedAlpha1)/max(limitedAlpha1, 1.0);
+    mCondNoAlphal_ =  mCondFlux_*gradAlphal*neg(T_-TSat_);
+    mEvapNoAlphal_ = -mEvapFlux_*gradAlphal*pos(T_-TSat_);
 
-	mCondAlphal_   = mCondNoAlphal_;//*(1-limitedAlpha1);
-	mEvapAlphal_   = mEvapNoAlphal_;//*limitedAlpha1;
+	mCondAlphal_   = mCondNoAlphal_*(1-limitedAlpha1);
+	mEvapAlphal_   = mEvapNoAlphal_*limitedAlpha1;
 
 	// minus sign to provide mc > 0  and mv > 0
 	mCondNoTmTSat_ =  mCondAlphal_/T1;
@@ -84,6 +84,15 @@ Foam ::volScalarField Foam::phaseChangeTwoPhaseMixtures::Constant::calcGradAlpha
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Constant::mDotAlphal() 
 {
+    const dimensionedScalar T1("1K", dimTemperature, 1.0);
+    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
+
+	mCondAlphal_   = mCondNoAlphal_*(1-limitedAlpha1);
+	mEvapAlphal_   = mEvapNoAlphal_*limitedAlpha1;
+
+	mCondNoTmTSat_ =  mCondAlphal_/T1*(1-limitedAlpha1);
+	mEvapNoTmTSat_ = -mEvapAlphal_/T1*limitedAlpha1;
+
 	return Pair<tmp<volScalarField> >
 	(
 		mCondNoAlphal_*scalar(1),
@@ -96,10 +105,8 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::mDotP() const
 {
 	return Pair<tmp<volScalarField> >
 	(
-		mCondAlphal_*scalar(1)*pos(p_ - pSat_)/max(p_-pSat_,1E-6*pSat_),
-	    mEvapAlphal_*scalar(1)*neg(p_ - pSat_)/max(pSat_-p_,1E-6*pSat_)
-//    	vmCondFlux_*scalar(1),
-//       -vmEvapFlux_*scalar(1)
+		mCondAlphal_*pos(p_ - pSat_)/max(p_-pSat_,1E-6*pSat_),
+	    mEvapAlphal_*neg(p_ - pSat_)/max(pSat_-p_,1E-6*pSat_)
 	);
 }
 
@@ -111,8 +118,6 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::mDotT() const
 	(
 		 mCondNoTmTSat_*neg(T_ - TSat_)/max(TSat_ - T_,1E-6*TSat_)*T1,
 	     mEvapNoTmTSat_*pos(T_ - TSat_)/max(T_ - TSat_,1E-6*TSat_)*T1
-		//-vmCondFlux_*scalar(1),
-	    // vmEvapFlux_*scalar(1)
 	);
 }
 
