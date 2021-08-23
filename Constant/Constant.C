@@ -97,7 +97,7 @@ Foam::phaseChangeTwoPhaseMixtures::Constant::mDotP() const
 	return Pair<tmp<volScalarField> >
 	(
 		mCondAlphal_*scalar(1)*pos(p_ - pSat_)/max(p_-pSat_,1E-6*pSat_),
-	    mEvapAlphal_*scalar(1)//*neg(p_ - pSat_)/max(pSat_-p_,1E-6*pSat_)
+	    mEvapAlphal_*scalar(1)*neg(p_ - pSat_)/max(pSat_-p_,1E-6*pSat_)
 //    	vmCondFlux_*scalar(1),
 //       -vmEvapFlux_*scalar(1)
 	);

@@ -76,7 +76,7 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal()
 
 	// plus sign to provide mc < 0  and mv > 0
 	mCondNoTmTSat_ = -mcCoeff_*neg(T_ - TSat_)*(scalar(1) - limitedAlpha1)/TSat_;
-	mEvapNoTmTSat_ = -mvCoeff_*pos(T_ - TSat_)*limitedAlpha1/TSat_;
+	mEvapNoTmTSat_ =  mvCoeff_*pos(T_ - TSat_)*limitedAlpha1/TSat_;
 
 	//Info<< "mCondNoAlphal_ = " << mCondNoAlphal_ << endl;
 	//Info<< "mCondNoTmTSat_ = " << mCondNoTmTSat_ << endl;
@@ -102,8 +102,10 @@ Foam::phaseChangeTwoPhaseMixtures::Lee::mDotP() const
 
     //    -mvCoeff_*limitedAlpha1*max(T_ - TSat_, T0)/TSat_
 	//	*neg(p_ - pSat_)/max(pSat_ - p_, 1E-8*pSat_)
-		mCondAlphal_*scalar(1),
-		mEvapAlphal_*scalar(1)
+	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),//*(1.0-limitedAlpha1),
+		    mEvapAlphal_*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
+		//mCondAlphal_*scalar(1),
+		//mEvapAlphal_*scalar(1)
     );
 }
 

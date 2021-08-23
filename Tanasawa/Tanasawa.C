@@ -55,6 +55,9 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::Tanasawa
     gamma_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("gamma")),
 	// czy nie powinno byc dla wrzenia mnozone przez rho1?
 	// czyli czy nie powinno byc mvCoeff i mlCoeff?
+	// jak zmienilem dla nowego algorytmu dla parowania na rho1() 
+	// to mniejsze bledy wyszly, ale i tak sa duze
+	// ale doszlo do 30% bledu i stanelo wiec raczej ma byc rho2()
    	mCoeff_(2.0*gamma_/(2.0 - gamma_)/sqrt(2.0*M_PI*R_)*hEvap_*rho2())
 {
 	Info<< "Tanasawa model settings:  " << endl;
@@ -82,7 +85,7 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 	mCondNoAlphal_ = -mCoeff_*neg(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
 	mEvapNoAlphal_ = -mCoeff_*pos(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
 
-	// In Tanasawa model there is now alpha term
+	// In Tanasawa model there is no alpha term
 	// probably it should be divided here by alphal and (1-alphal) but it
 	// could produce errrors. To avoid this and follow the algorithm in alphaEqn.H
 	// the modified Tanasawa model is implemented with additional multiplication
@@ -168,6 +171,7 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 			//mEvapP_*scalar(0)
 	//        mCondAlphal_*scalar(1),
 		    mEvapAlphal_*scalar(0)
+						*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
 		);
 	}
 	else if (evap_)
@@ -179,7 +183,7 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 	//		//			*neg(p_-pSat_)/max(pSat_-p_,1E-05*pSat_)*limitedAlpha1
 	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*scalar(0),
 		    mEvapAlphal_*scalar(1)
-					//	*neg(p_-pSat_)/max(pSat_-p_,1E-05*pSat_)
+						*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
 		);
 	}
 	else 
