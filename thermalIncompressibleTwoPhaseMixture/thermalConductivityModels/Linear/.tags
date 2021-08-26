@@ -1,0 +1,37 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Cc_	Lee.H	/^        dimensionedScalar Cc_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Cv_	Lee.H	/^        dimensionedScalar Cv_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam	Lee.C	/^namespace Foam$/;"	n	language:C++	file:
+Foam	Lee.H	/^namespace Foam$/;"	n	language:C++
+Foam::phaseChangeTwoPhaseMixtures	Lee.C	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam	file:
+Foam::phaseChangeTwoPhaseMixtures	Lee.H	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam
+Foam::phaseChangeTwoPhaseMixtures::Lee	Lee.H	/^class Lee$/;"	c	language:C++	namespace:Foam::phaseChangeTwoPhaseMixtures
+Foam::phaseChangeTwoPhaseMixtures::Lee::Cc_	Lee.H	/^        dimensionedScalar Cc_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::Cv_	Lee.H	/^        dimensionedScalar Cv_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::Lee	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::Lee$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::mDotP	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::mDotT	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::mcCoeff_	Lee.H	/^        dimensionedScalar mcCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::mvCoeff_	Lee.H	/^        dimensionedScalar mvCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::read	Lee.C	/^bool Foam::phaseChangeTwoPhaseMixtures::Lee::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::~Lee	Lee.H	/^    virtual ~Lee()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Lee	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::Lee$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Lee	Lee.H	/^class Lee$/;"	c	language:C++	namespace:Foam::phaseChangeTwoPhaseMixtures
+Lee.C	Lee.C	1;"	F	language:C++
+Lee.H	Lee.H	1;"	F	language:C++
+Lee_H	Lee.H	45;"	d	language:C++
+mDotAlphal	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+mDotP	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+mDotT	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+mcCoeff_	Lee.H	/^        dimensionedScalar mcCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+mvCoeff_	Lee.H	/^        dimensionedScalar mvCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+phaseChangeTwoPhaseMixtures	Lee.C	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam	file:
+phaseChangeTwoPhaseMixtures	Lee.H	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam
+read	Lee.C	/^bool Foam::phaseChangeTwoPhaseMixtures::Lee::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+~Lee	Lee.H	/^    virtual ~Lee()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee

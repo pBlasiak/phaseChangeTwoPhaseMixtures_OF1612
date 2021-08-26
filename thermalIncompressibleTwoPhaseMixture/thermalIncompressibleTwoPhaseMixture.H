@@ -37,6 +37,7 @@ SourceFiles
 
 //#include "incompressibleTwoPhaseMixture.H"
 #include "immiscibleIncompressibleTwoPhaseMixture.H"
+#include "thermalConductivity.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -63,6 +64,7 @@ protected:
         dimensionedScalar cp1_;
         dimensionedScalar cp2_;
 
+		autoPtr<thermalConductivity> thermalConductivityModel_;
 
 
 public:
@@ -111,32 +113,32 @@ public:
             return cp2_;
         };
 
-		//- Return thermal conductivity of the mixture
-		tmp<volScalarField> k() const;
-		
-		//- Return face-interpolated thermal conductivity 
-		//  of the mixture 
-		tmp<surfaceScalarField> kf() const;
+		//- Return thermal diffusivity of the mixture
+		tmp<volScalarField> k() const
+		{
+             return thermalConductivityModel_->k(this);
+		}
 
-		//- Return face-interpolated harmonic thermal conductivity 
-		//  of the mixture 
-		tmp<surfaceScalarField> kfHarmonic() const;
+		//////- Return thermal conductivity of the mixture
+		////tmp<volScalarField> k() const;
+		//
+		////- Return face-interpolated thermal conductivity 
+		////  of the mixture 
+		//tmp<surfaceScalarField> kf() const;
 
-		//- Return face-interpolated density-weighted 
-		//  harmonic thermal conductivity of the mixture 
-		tmp<surfaceScalarField> kfDensityHarmonic() const;
+		////- Return face-interpolated harmonic thermal conductivity 
+		////  of the mixture 
+		//tmp<surfaceScalarField> kfHarmonic() const;
+
+		////- Return face-interpolated density-weighted 
+		////  harmonic thermal conductivity of the mixture 
+		//tmp<surfaceScalarField> kfDensityHarmonic() const;
 
 		//- Return density of the mixture
 		tmp<volScalarField> rho() const;
 
 		//- Return specific heat of the mixture
 		tmp<volScalarField> cp() const;
-
-		//- Return thermal diffusivity of the mixture
-		tmp<volScalarField> alphaEff() const;
-
-		//- Return face-interpolated thermal diffusivity of the mixture
-		tmp<surfaceScalarField> alphaEfff() const;
 
         //- Correct the transport and interface properties
         virtual void correct()

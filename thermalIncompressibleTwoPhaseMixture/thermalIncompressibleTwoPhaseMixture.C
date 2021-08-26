@@ -27,7 +27,6 @@ License
 #include "thermalIncompressibleTwoPhaseMixture.H"
 #include "fvc.H"
 
-
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
 
 namespace Foam
@@ -69,93 +68,82 @@ Foam::thermalIncompressibleTwoPhaseMixture::thermalIncompressibleTwoPhaseMixture
         "cp2",
         dimEnergy/dimTemperature/dimMass,
         subDict(phase2Name_).lookup("cp")
+    ),
+    thermalConductivityModel_
+    (
+        thermalConductivity::New
+        (
+            U,
+            phi
+        )
     )
-
 {
 
 }
 
 
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
-Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::k() const
-{
-    const volScalarField limitedAlpha1
-    (
-        min(max(alpha1(), scalar(0)), scalar(1))
-    );
-
-    return tmp<volScalarField>
-    (
-		new volScalarField
-        (
-            "k",
-            limitedAlpha1*k1_
-          + (scalar(1) - limitedAlpha1)*k2_
-        )
-    );
-}
-
-Foam::tmp<Foam::surfaceScalarField> 
-Foam::thermalIncompressibleTwoPhaseMixture::kf() const
-{
-    const surfaceScalarField limitedAlpha1f
-    (
-        min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
-    );
-
-    return tmp<surfaceScalarField>
-    (
-		new surfaceScalarField
-        (
-            "kf",
-            limitedAlpha1f*k1_
-          + (scalar(1) - limitedAlpha1f)*k2_
-        )
-    );
-}
-
-Foam::tmp<Foam::surfaceScalarField> 
-Foam::thermalIncompressibleTwoPhaseMixture::kfHarmonic() const
-{
-    const surfaceScalarField limitedAlpha1f
-    (
-        min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
-    );
-
-    return tmp<surfaceScalarField>
-    (
-		new surfaceScalarField
-        (
-            "kfHarmonic",
-			1.0/
-			(
-				(1.0/k1_ - 1.0/k2_)*limitedAlpha1f
-			  + 1.0/k2_
-			)
-        )
-    );
-}
-
-Foam::tmp<Foam::surfaceScalarField> 
-Foam::thermalIncompressibleTwoPhaseMixture::kfDensityHarmonic() const
-{
-    const surfaceScalarField limitedAlpha1f
-    (
-        min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
-    );
-
-    return tmp<surfaceScalarField>
-    (
-		new surfaceScalarField
-        (
-            "kfHarmonic",
-			(
-				k1_*limitedAlpha1f/rho1_ 
-			  - (1.0 - limitedAlpha1f)*k2_/rho2_ 
-			)/(limitedAlpha1f/rho1_ - (1.0 - limitedAlpha1f)/rho2_)
-        )
-    );
-}
+//Foam::tmp<Foam::surfaceScalarField> 
+//Foam::thermalIncompressibleTwoPhaseMixture::kf() const
+//{
+//    const surfaceScalarField limitedAlpha1f
+//    (
+//        min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
+//    );
+//
+//    return tmp<surfaceScalarField>
+//    (
+//		new surfaceScalarField
+//        (
+//            "kf",
+//            limitedAlpha1f*k1_
+//          + (scalar(1) - limitedAlpha1f)*k2_
+//        )
+//    );
+//}
+//
+//Foam::tmp<Foam::surfaceScalarField> 
+//Foam::thermalIncompressibleTwoPhaseMixture::kfHarmonic() const
+//{
+//    const surfaceScalarField limitedAlpha1f
+//    (
+//        min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
+//    );
+//
+//    return tmp<surfaceScalarField>
+//    (
+//		new surfaceScalarField
+//        (
+//            "kfHarmonic",
+//			1.0/
+//			(
+//				(1.0/k1_ - 1.0/k2_)*limitedAlpha1f
+//			  + 1.0/k2_
+//			)
+//        )
+//    );
+//}
+//
+//Foam::tmp<Foam::surfaceScalarField> 
+//Foam::thermalIncompressibleTwoPhaseMixture::kfDensityHarmonic() const
+//{
+//    const surfaceScalarField limitedAlpha1f
+//    (
+//        min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
+//    );
+//
+//    return tmp<surfaceScalarField>
+//    (
+//		new surfaceScalarField
+//        (
+//            "kfHarmonic",
+//			(
+//				k1_*limitedAlpha1f/rho1_ 
+//			  - (1.0 - limitedAlpha1f)*k2_/rho2_ 
+//			)/(limitedAlpha1f/rho1_ - (1.0 - limitedAlpha1f)/rho2_)
+//        )
+//    );
+//}
 
 Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::rho() const
 {
@@ -194,43 +182,26 @@ Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::cp()
 	);
 }
 
-Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::alphaEff() const
-{
-	const volScalarField limitedAlpha1
-	(
-		min(max(alpha1(), scalar(0)), scalar(1))
-	);
-
-	return tmp<volScalarField>
-	(
-		new volScalarField
-		(
-			"alphaEff",
-			k()/cp()/rho() 
-		)
-	);
-}
-
-Foam::tmp<Foam::surfaceScalarField> Foam::thermalIncompressibleTwoPhaseMixture::alphaEfff() const
-{
-	const surfaceScalarField limitedAlpha1f
-	(
-		min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
-	);
-
-	return tmp<surfaceScalarField>
-	(
-		new surfaceScalarField
-		(
-			"alphaEfff",
-			(
-              //  limitedAlpha1f*k1_/rho1_/cp1_ 
-			  //+ (scalar(1) - limitedAlpha1f)*k2_/rho2_/cp2_
-			  fvc::interpolate(alphaEff())
-			)
-		)
-	);
-}
+//Foam::tmp<Foam::surfaceScalarField> Foam::thermalIncompressibleTwoPhaseMixture::alphaEfff() const
+//{
+//	const surfaceScalarField limitedAlpha1f
+//	(
+//		min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
+//	);
+//
+//	return tmp<surfaceScalarField>
+//	(
+//		new surfaceScalarField
+//		(
+//			"alphaEfff",
+//			(
+//              //  limitedAlpha1f*k1_/rho1_/cp1_ 
+//			  //+ (scalar(1) - limitedAlpha1f)*k2_/rho2_/cp2_
+//			  fvc::interpolate(alphaEff())
+//			)
+//		)
+//	);
+//}
 
 bool Foam::thermalIncompressibleTwoPhaseMixture::read()
 {

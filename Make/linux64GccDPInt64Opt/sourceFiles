@@ -1,5 +1,8 @@
 SOURCE = \
 thermalIncompressibleTwoPhaseMixture/thermalIncompressibleTwoPhaseMixture.C \
+thermalIncompressibleTwoPhaseMixture/thermalConductivityModels/thermalConductivity/thermalConductivity.C \
+thermalIncompressibleTwoPhaseMixture/thermalConductivityModels/thermalConductivity/newThermalConductivity.C \
+thermalIncompressibleTwoPhaseMixture/thermalConductivityModels/Linear/Linear.C \
 phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixture.C \
 phaseChangeTwoPhaseMixture/newPhaseChangeTwoPhaseMixture.C \
 Lee/Lee.C \
