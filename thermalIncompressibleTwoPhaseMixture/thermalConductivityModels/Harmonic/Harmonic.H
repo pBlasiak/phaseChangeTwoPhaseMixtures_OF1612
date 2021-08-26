@@ -22,28 +22,28 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::thermalConductivityModels::Linear
+    Foam::thermalConductivityModels::Harmonic
 
 Description
 TODO poprawic
-    Linear phase change model. It is based on saturation temperature.
+    Harmonic phase change model. It is based on saturation temperature.
 	For T < TSat => condensation occurs
 	and T > TSat => evaporation occurs
 
     Reference:
     \verbatim
-        Linear, W.H.
+        Harmonic, W.H.
         "A Pressure Iteration Scheme for Two-Phase Modeling. Technical Report LA-UR 79-975",
         Los Alamos Scientific Laboratory, Los Alamos, New Mexico, 1979.
     \endverbatim
 
 SourceFiles
-    Linear.C
+    Harmonic.C
 
 \*--------------------------------------------------------------------*/
 
-#ifndef Linear_H
-#define Linear_H
+#ifndef Harmonic_H
+#define Harmonic_H
 
 #include "thermalConductivity.H"
 #include "thermalIncompressibleTwoPhaseMixture.H"
@@ -56,10 +56,10 @@ namespace thermalConductivityModels
 {
 
 /*--------------------------------------------------------------------*\
-                              Class Linear
+                              Class Harmonic
 \*--------------------------------------------------------------------*/
 
-class Linear
+class Harmonic
 :
     public thermalConductivity
 {
@@ -75,13 +75,13 @@ class Linear
 public:
 
     //- Runtime type information
-    TypeName("linear");
+    TypeName("harmonic");
 
 
     // Constructors
 
         //- construct from components
-        Linear
+        Harmonic
         (
             const volVectorField& U,
             const surfaceScalarField& phi
@@ -89,7 +89,7 @@ public:
 
 
     //- Destructor
-    virtual ~Linear()
+    virtual ~Harmonic()
     {}
 
 
