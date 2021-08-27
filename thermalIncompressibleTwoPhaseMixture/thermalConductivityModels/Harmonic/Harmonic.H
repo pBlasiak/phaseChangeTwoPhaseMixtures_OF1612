@@ -25,16 +25,13 @@ Class
     Foam::thermalConductivityModels::Harmonic
 
 Description
-TODO poprawic
-    Harmonic phase change model. It is based on saturation temperature.
-	For T < TSat => condensation occurs
-	and T > TSat => evaporation occurs
+    Harmonic thermal conductivity model for a mixture. 
 
     Reference:
     \verbatim
-        Harmonic, W.H.
-        "A Pressure Iteration Scheme for Two-Phase Modeling. Technical Report LA-UR 79-975",
-        Los Alamos Scientific Laboratory, Los Alamos, New Mexico, 1979.
+	Cosden, Ian A., "A Hybrid Atomistic-Continuum Model for Liquid-Vapor Phase Change" (2013). 
+	Publicly Accessible Penn Dissertations. 846.  
+    https://repository.upenn.edu/edissertations/846
     \endverbatim
 
 SourceFiles

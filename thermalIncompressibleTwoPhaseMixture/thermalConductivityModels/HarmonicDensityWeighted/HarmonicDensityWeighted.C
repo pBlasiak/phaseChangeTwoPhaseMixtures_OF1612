@@ -23,7 +23,7 @@ License
 
 \*---------------------------------------------------------------------------*/
 
-#include "Harmonic.H"
+#include "HarmonicDensityWeighted.H"
 #include "addToRunTimeSelectionTable.H"
 
 // * * * * * * * * * * * * * * Static Data Members * * * * * * * * * * * * * //
@@ -32,14 +32,14 @@ namespace Foam
 {
 namespace thermalConductivityModels
 {
-    defineTypeNameAndDebug(Harmonic, 0);
-    addToRunTimeSelectionTable(thermalConductivity, Harmonic, components);
+    defineTypeNameAndDebug(HarmonicDensityWeighted, 0);
+    addToRunTimeSelectionTable(thermalConductivity, HarmonicDensityWeighted, components);
 }
 }
 
 // * * * * * * * * * * * * * * * * Constructors  * * * * * * * * * * * * * * //
 
-Foam::thermalConductivityModels::Harmonic::Harmonic
+Foam::thermalConductivityModels::HarmonicDensityWeighted::HarmonicDensityWeighted
 (
     const volVectorField& U,
     const surfaceScalarField& phi
@@ -53,7 +53,7 @@ Foam::thermalConductivityModels::Harmonic::Harmonic
     //mcCoeff_(Cc_*rho2()),
     //mvCoeff_(Cv_*rho1())
 {
-	//Info<< "Phase change relaxation time factors for the Harmonic model:\n" 
+	//Info<< "Phase change relaxation time factors for the HarmonicDensityWeighted model:\n" 
 	//	<< "Cc = " << Cc_ << endl
 	//	<< "Cv = " << Cv_ << endl;
 }
@@ -62,7 +62,7 @@ Foam::thermalConductivityModels::Harmonic::Harmonic
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 
 Foam::tmp<Foam::volScalarField> 
-Foam::thermalConductivityModels::Harmonic::k(const Foam::thermalIncompressibleTwoPhaseMixture* titpm) const
+Foam::thermalConductivityModels::HarmonicDensityWeighted::k(const Foam::thermalIncompressibleTwoPhaseMixture* titpm) const
 {
 	const volScalarField limitedAlpha1
 	(
@@ -73,17 +73,16 @@ Foam::thermalConductivityModels::Harmonic::k(const Foam::thermalIncompressibleTw
     (
 		new volScalarField
         (
-            "kHarmonic",
-			scalar(1.0)/
+            "kHarmonicDensityWeighted",
 			(
-				(1.0/titpm->k1() - 1.0/titpm->k2())*limitedAlpha1
-			  + 1.0/titpm->k2()
-			)
+				titpm->k1()*limitedAlpha1/titpm->rho1() 
+			  - (scalar(1.0) - limitedAlpha1)*titpm->k2()/titpm->rho2() 
+			)/(limitedAlpha1/titpm->rho1() - (scalar(1.0) - limitedAlpha1)/titpm->rho2())
         )
 	);
 }
 
-bool Foam::thermalConductivityModels::Harmonic::read()
+bool Foam::thermalConductivityModels::HarmonicDensityWeighted::read()
 {
     //if (thermalConductivity::read())
     //{

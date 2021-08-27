@@ -22,20 +22,25 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    Foam::thermalConductivityModels::Linear
+    Foam::thermalConductivityModels::HarmonicDensityWeighted
 
 Description
-TODO poprawic
-    Linear thermal conductivity model for a mixture. 
-	kEff = alpha1*k1 + alpha2*k2
+    HarmonicDensityWeighted thermal conductivity model for a mixture. 
+
+    Reference:
+    \verbatim
+	Cosden, Ian A., "A Hybrid Atomistic-Continuum Model for Liquid-Vapor Phase Change" (2013). 
+	Publicly Accessible Penn Dissertations. 846.  
+    https://repository.upenn.edu/edissertations/846
+    \endverbatim
 
 SourceFiles
-    Linear.C
+    HarmonicDensityWeighted.C
 
 \*--------------------------------------------------------------------*/
 
-#ifndef Linear_H
-#define Linear_H
+#ifndef HarmonicDensityWeighted_H
+#define HarmonicDensityWeighted_H
 
 #include "thermalConductivity.H"
 #include "thermalIncompressibleTwoPhaseMixture.H"
@@ -48,10 +53,10 @@ namespace thermalConductivityModels
 {
 
 /*--------------------------------------------------------------------*\
-                              Class Linear
+                              Class HarmonicDensityWeighted
 \*--------------------------------------------------------------------*/
 
-class Linear
+class HarmonicDensityWeighted
 :
     public thermalConductivity
 {
@@ -67,13 +72,13 @@ class Linear
 public:
 
     //- Runtime type information
-    TypeName("linear");
+    TypeName("harmonicDensityWeighted");
 
 
     // Constructors
 
         //- construct from components
-        Linear
+        HarmonicDensityWeighted
         (
             const volVectorField& U,
             const surfaceScalarField& phi
@@ -81,7 +86,7 @@ public:
 
 
     //- Destructor
-    virtual ~Linear()
+    virtual ~HarmonicDensityWeighted()
     {}
 
 

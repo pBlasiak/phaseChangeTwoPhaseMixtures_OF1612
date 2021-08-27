@@ -38,6 +38,7 @@ SourceFiles
 //#include "incompressibleTwoPhaseMixture.H"
 #include "immiscibleIncompressibleTwoPhaseMixture.H"
 #include "thermalConductivity.H"
+#include "fvc.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -113,26 +114,26 @@ public:
             return cp2_;
         };
 
-		//- Return thermal diffusivity of the mixture
+        //- Return the effective laminar thermal conductivity
 		tmp<volScalarField> k() const
 		{
              return thermalConductivityModel_->k(this);
 		}
 
-		//////- Return thermal conductivity of the mixture
-		////tmp<volScalarField> k() const;
-		//
-		////- Return face-interpolated thermal conductivity 
-		////  of the mixture 
-		//tmp<surfaceScalarField> kf() const;
-
-		////- Return face-interpolated harmonic thermal conductivity 
-		////  of the mixture 
-		//tmp<surfaceScalarField> kfHarmonic() const;
-
-		////- Return face-interpolated density-weighted 
-		////  harmonic thermal conductivity of the mixture 
-		//tmp<surfaceScalarField> kfDensityHarmonic() const;
+        //- Return the effective face-interpolated laminar thermal conductivity
+		tmp<surfaceScalarField> kf() const
+		{
+	        return tmp<surfaceScalarField>
+	        (
+	        	new surfaceScalarField
+	        	(
+	        		"kf",
+	        		(
+	        		    fvc::interpolate(k())
+	        		)
+	        	)
+	        );
+		}
 
 		//- Return density of the mixture
 		tmp<volScalarField> rho() const;
