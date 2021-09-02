@@ -7,38 +7,38 @@
 Foam	thermalIncompressibleTwoPhaseMixture.C	/^namespace Foam$/;"	n	language:C++	file:
 Foam	thermalIncompressibleTwoPhaseMixture.H	/^namespace Foam$/;"	n	language:C++
 Foam::thermalIncompressibleTwoPhaseMixture	thermalIncompressibleTwoPhaseMixture.H	/^class thermalIncompressibleTwoPhaseMixture$/;"	c	language:C++	namespace:Foam
-Foam::thermalIncompressibleTwoPhaseMixture::alphaEff	thermalIncompressibleTwoPhaseMixture.C	/^Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::alphaEff() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
+Foam::thermalIncompressibleTwoPhaseMixture::correct	thermalIncompressibleTwoPhaseMixture.H	/^        virtual void correct()$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::cp	thermalIncompressibleTwoPhaseMixture.C	/^Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::cp() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::cp1	thermalIncompressibleTwoPhaseMixture.H	/^        const dimensionedScalar& cp1() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::cp1_	thermalIncompressibleTwoPhaseMixture.H	/^        dimensionedScalar cp1_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::cp2	thermalIncompressibleTwoPhaseMixture.H	/^        const dimensionedScalar& cp2() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::cp2_	thermalIncompressibleTwoPhaseMixture.H	/^        dimensionedScalar cp2_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
-Foam::thermalIncompressibleTwoPhaseMixture::k	thermalIncompressibleTwoPhaseMixture.C	/^Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::k() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
+Foam::thermalIncompressibleTwoPhaseMixture::k	thermalIncompressibleTwoPhaseMixture.H	/^		tmp<volScalarField> k() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::k1	thermalIncompressibleTwoPhaseMixture.H	/^        const dimensionedScalar& k1() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::k1_	thermalIncompressibleTwoPhaseMixture.H	/^        dimensionedScalar k1_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::k2	thermalIncompressibleTwoPhaseMixture.H	/^        const dimensionedScalar& k2() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::k2_	thermalIncompressibleTwoPhaseMixture.H	/^        dimensionedScalar k2_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
-Foam::thermalIncompressibleTwoPhaseMixture::kfDensityHarmonic	thermalIncompressibleTwoPhaseMixture.C	/^Foam::thermalIncompressibleTwoPhaseMixture::kfDensityHarmonic() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
-Foam::thermalIncompressibleTwoPhaseMixture::kfHarmonic	thermalIncompressibleTwoPhaseMixture.C	/^Foam::thermalIncompressibleTwoPhaseMixture::kfHarmonic() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
+Foam::thermalIncompressibleTwoPhaseMixture::kf	thermalIncompressibleTwoPhaseMixture.H	/^		tmp<surfaceScalarField> kf() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::read	thermalIncompressibleTwoPhaseMixture.C	/^bool Foam::thermalIncompressibleTwoPhaseMixture::read()$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::rho	thermalIncompressibleTwoPhaseMixture.C	/^Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::rho() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
+Foam::thermalIncompressibleTwoPhaseMixture::thermalConductivityModel_	thermalIncompressibleTwoPhaseMixture.H	/^		autoPtr<thermalConductivity> thermalConductivityModel_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::thermalIncompressibleTwoPhaseMixture	thermalIncompressibleTwoPhaseMixture.C	/^Foam::thermalIncompressibleTwoPhaseMixture::thermalIncompressibleTwoPhaseMixture$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 Foam::thermalIncompressibleTwoPhaseMixture::~thermalIncompressibleTwoPhaseMixture	thermalIncompressibleTwoPhaseMixture.H	/^    virtual ~thermalIncompressibleTwoPhaseMixture()$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
-alphaEff	thermalIncompressibleTwoPhaseMixture.C	/^Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::alphaEff() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
+correct	thermalIncompressibleTwoPhaseMixture.H	/^        virtual void correct()$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 cp	thermalIncompressibleTwoPhaseMixture.C	/^Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::cp() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 cp1	thermalIncompressibleTwoPhaseMixture.H	/^        const dimensionedScalar& cp1() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 cp1_	thermalIncompressibleTwoPhaseMixture.H	/^        dimensionedScalar cp1_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 cp2	thermalIncompressibleTwoPhaseMixture.H	/^        const dimensionedScalar& cp2() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 cp2_	thermalIncompressibleTwoPhaseMixture.H	/^        dimensionedScalar cp2_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
-k	thermalIncompressibleTwoPhaseMixture.C	/^Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::k() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
+k	thermalIncompressibleTwoPhaseMixture.H	/^		tmp<volScalarField> k() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 k1	thermalIncompressibleTwoPhaseMixture.H	/^        const dimensionedScalar& k1() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 k1_	thermalIncompressibleTwoPhaseMixture.H	/^        dimensionedScalar k1_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 k2	thermalIncompressibleTwoPhaseMixture.H	/^        const dimensionedScalar& k2() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 k2_	thermalIncompressibleTwoPhaseMixture.H	/^        dimensionedScalar k2_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
-kfDensityHarmonic	thermalIncompressibleTwoPhaseMixture.C	/^Foam::thermalIncompressibleTwoPhaseMixture::kfDensityHarmonic() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
-kfHarmonic	thermalIncompressibleTwoPhaseMixture.C	/^Foam::thermalIncompressibleTwoPhaseMixture::kfHarmonic() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
+kf	thermalIncompressibleTwoPhaseMixture.H	/^		tmp<surfaceScalarField> kf() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 read	thermalIncompressibleTwoPhaseMixture.C	/^bool Foam::thermalIncompressibleTwoPhaseMixture::read()$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 rho	thermalIncompressibleTwoPhaseMixture.C	/^Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::rho() const$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
+thermalConductivityModel_	thermalIncompressibleTwoPhaseMixture.H	/^		autoPtr<thermalConductivity> thermalConductivityModel_;$/;"	m	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 thermalIncompressibleTwoPhaseMixture	thermalIncompressibleTwoPhaseMixture.C	/^Foam::thermalIncompressibleTwoPhaseMixture::thermalIncompressibleTwoPhaseMixture$/;"	f	language:C++	class:Foam::thermalIncompressibleTwoPhaseMixture
 thermalIncompressibleTwoPhaseMixture	thermalIncompressibleTwoPhaseMixture.H	/^class thermalIncompressibleTwoPhaseMixture$/;"	c	language:C++	namespace:Foam
 thermalIncompressibleTwoPhaseMixture.C	thermalIncompressibleTwoPhaseMixture.C	1;"	F	language:C++

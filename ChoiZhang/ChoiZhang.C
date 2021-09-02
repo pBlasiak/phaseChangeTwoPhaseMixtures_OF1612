@@ -45,99 +45,37 @@ Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::ChoiZhang
     const surfaceScalarField& phi
 )
 :
-    phaseChangeTwoPhaseMixture(typeName, U, phi),
+    Lee(U, phi),
 
-    Cc_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("Cc")),
-    Cv_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("Cv")),
+    Ccvar_(Cc_)
+    //Cv_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("Cv")),
 
-    mcCoeff_(Cc_*rho2()),
-    mvCoeff_(Cv_*rho1())
 {
-	//TODO: sprawdz czy model jest w solverze korektowany
+	Info<< "Phase change relaxation time factors for the " << type() << " model:\n" 
+		<< "Cc = " << Ccvar_ << endl
+		<< "Cv = " << Cv_ << endl;
 }
 
 
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
 
-Foam::Pair<Foam::tmp<Foam::volScalarField> >
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotAlphal() const
-{
-    const dimensionedScalar T0("0", dimTemperature, 0.0);
-
-    return Pair<tmp<volScalarField> >
-    (
-		// minus sign "-" to provide mc > 0  and mv < 0
-		-mcCoeff_*min(T_ - TSat_, T0)/TSat_,
-
-		-mvCoeff_*max(T_ - TSat_, T0)/TSat_
-    );
-}
-
-Foam::Pair<Foam::tmp<Foam::volScalarField> >
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotP() const
-{
-    const volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
-    const dimensionedScalar T0("0", dimTemperature, 0.0);
-
-    return Pair<tmp<volScalarField> >
-    (
-		// minus sign "-" to provide mc > 0  and mv < 0
-        -mcCoeff_*(1.0 - limitedAlpha1)*min(T_ - TSat_, T0)/TSat_
-		*pos(p_ - pSat_)/max(p_ - pSat_, 1E-8*pSat_),
-
-        -mvCoeff_*limitedAlpha1*max(T_ - TSat_, T0)/TSat_
-		*neg(p_ - pSat_)/max(pSat_ - p_, 1E-8*pSat_)
-    );
-}
-
-Foam::Pair<Foam::tmp<Foam::volScalarField> >
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotT() const
-{
-    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
-
-    return Pair<tmp<volScalarField> >
-    (
-		// minus sign "-" to provide mc > 0  
-		// now also mv > 0 but in TEqn, term (mc - mv) is applied
-        -mcCoeff_*(1.0 - limitedAlpha1)*neg(T_ - TSat_)/TSat_,
-
-        mvCoeff_*limitedAlpha1*pos(T_ - TSat_)/TSat_
-    );
-}
-
-bool Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::read()
-{
-    if (phaseChangeTwoPhaseMixture::read())
-    {
-        phaseChangeTwoPhaseMixtureCoeffs_ = subDict(type() + "Coeffs");
-
-        phaseChangeTwoPhaseMixtureCoeffs_.lookup("Cc") >> Cc_;
-        phaseChangeTwoPhaseMixtureCoeffs_.lookup("Cv") >> Cv_;
-
-        mcCoeff_ = Cc_*rho2();
-        mvCoeff_ = Cv_*rho1();
-
-        return true;
-    }
-    else
-    {
-        return false;
-    }
-}
 
 void Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::correct()
 {
 	phaseChangeTwoPhaseMixture::correct();
 
-	Cc_ = Cv_; // jak tego nie ma to Cc najpierw maleje do 1e-150 apotem rosnie do 1e+300
-	scalar totmCond(0);
-	scalar totmEvap(0);
-	totmCond = gSum(mCond_);
-	totmEvap = gSum(mEvap_);
-	if (!(totmCond == 0 && mag(totmEvap) == 0))
-		Cc_.value() = Cc_.value() - Cc_.value()*((totmCond - mag(totmEvap))/max(totmCond, mag(totmEvap)));
+	//Ccvar_ = Cc_; // jak tego nie ma to Cc najpierw maleje do 1e-150 apotem rosnie do 1e+300
+	scalar totvmCond(0);
+	scalar totvmEvap(0);
+	totvmCond = gSum(mCondAlphal_);
+	totvmEvap = gSum(mEvapAlphal_);
+	if (!(totvmCond == 0 && mag(totvmEvap) == 0))
+		Ccvar_.value() -= Ccvar_.value()*((totvmCond - mag(totvmEvap))
+	    	/max(totvmCond, mag(totvmEvap)));
 	
-	//Info<< "Updated Cc = " << Cc_.value() << endl;
+    mcCoeff_ = Ccvar_*rho2();
+	//Info<< "Updated mcCoeff = " << mcCoeff_.value() << endl;
+
 }
 
 

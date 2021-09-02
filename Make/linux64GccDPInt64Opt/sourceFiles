@@ -8,5 +8,6 @@ thermalIncompressibleTwoPhaseMixture/thermalConductivityModels/HarmonicDensityWe
 phaseChangeTwoPhaseMixture/phaseChangeTwoPhaseMixture.C \
 phaseChangeTwoPhaseMixture/newPhaseChangeTwoPhaseMixture.C \
 Lee/Lee.C \
-Tanasawa/Tanasawa.C \
-Constant/Constant.C 
+ChoiZhang/ChoiZhang.C \
+Xu/Xu.C \
+Tanasawa/Tanasawa.C 

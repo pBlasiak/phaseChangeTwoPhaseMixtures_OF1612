@@ -14,7 +14,7 @@ Foam::phaseChangeTwoPhaseMixtures::Lee	Lee.H	/^class Lee$/;"	c	language:C++	name
 Foam::phaseChangeTwoPhaseMixtures::Lee::Cc_	Lee.H	/^        dimensionedScalar Cc_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
 Foam::phaseChangeTwoPhaseMixtures::Lee::Cv_	Lee.H	/^        dimensionedScalar Cv_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
 Foam::phaseChangeTwoPhaseMixtures::Lee::Lee	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::Lee$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
-Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal() $/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
 Foam::phaseChangeTwoPhaseMixtures::Lee::mDotP	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
 Foam::phaseChangeTwoPhaseMixtures::Lee::mDotT	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
 Foam::phaseChangeTwoPhaseMixtures::Lee::mcCoeff_	Lee.H	/^        dimensionedScalar mcCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
@@ -26,7 +26,7 @@ Lee	Lee.H	/^class Lee$/;"	c	language:C++	namespace:Foam::phaseChangeTwoPhaseMixt
 Lee.C	Lee.C	1;"	F	language:C++
 Lee.H	Lee.H	1;"	F	language:C++
 Lee_H	Lee.H	45;"	d	language:C++
-mDotAlphal	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
+mDotAlphal	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotAlphal() $/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
 mDotP	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
 mDotT	Lee.C	/^Foam::phaseChangeTwoPhaseMixtures::Lee::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee
 mcCoeff_	Lee.H	/^        dimensionedScalar mcCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::Lee

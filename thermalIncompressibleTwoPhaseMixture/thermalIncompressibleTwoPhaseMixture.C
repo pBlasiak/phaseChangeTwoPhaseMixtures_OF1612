@@ -100,21 +100,6 @@ Foam::thermalIncompressibleTwoPhaseMixture::thermalIncompressibleTwoPhaseMixture
 //        )
 //    );
 //}
-//Foam::tmp<Foam::surfaceScalarField> 
-//Foam::thermalIncompressibleTwoPhaseMixture::kfDensityHarmonic() const
-//{
-//    const surfaceScalarField limitedAlpha1f
-//    (
-//        min(max(fvc::interpolate(alpha1()), scalar(0)), scalar(1))
-//    );
-//
-//    return tmp<surfaceScalarField>
-//    (
-//		new surfaceScalarField
-//        (
-//        )
-//    );
-//}
 
 Foam::tmp<Foam::volScalarField> Foam::thermalIncompressibleTwoPhaseMixture::rho() const
 {

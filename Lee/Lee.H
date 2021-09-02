@@ -61,7 +61,8 @@ class Lee
 :
     public phaseChangeTwoPhaseMixture
 {
-    // Private data
+    // Protected data
+protected:
 
         dimensionedScalar Cc_;
         dimensionedScalar Cv_;

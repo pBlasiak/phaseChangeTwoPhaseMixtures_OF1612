@@ -4,38 +4,24 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-Cc_	ChoiZhang.H	/^        dimensionedScalar Cc_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
+Ccvar_	ChoiZhang.H	/^        dimensionedScalar Ccvar_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 ChoiZhang	ChoiZhang.C	/^Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::ChoiZhang$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 ChoiZhang	ChoiZhang.H	/^class ChoiZhang$/;"	c	language:C++	namespace:Foam::phaseChangeTwoPhaseMixtures
 ChoiZhang.C	ChoiZhang.C	1;"	F	language:C++
 ChoiZhang.H	ChoiZhang.H	1;"	F	language:C++
 ChoiZhang_H	ChoiZhang.H	46;"	d	language:C++
-Cv_	ChoiZhang.H	/^        dimensionedScalar Cv_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 Foam	ChoiZhang.C	/^namespace Foam$/;"	n	language:C++	file:
 Foam	ChoiZhang.H	/^namespace Foam$/;"	n	language:C++
 Foam::phaseChangeTwoPhaseMixtures	ChoiZhang.C	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam	file:
 Foam::phaseChangeTwoPhaseMixtures	ChoiZhang.H	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam
 Foam::phaseChangeTwoPhaseMixtures::ChoiZhang	ChoiZhang.H	/^class ChoiZhang$/;"	c	language:C++	namespace:Foam::phaseChangeTwoPhaseMixtures
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::Cc_	ChoiZhang.H	/^        dimensionedScalar Cc_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
+Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::Ccvar_	ChoiZhang.H	/^        dimensionedScalar Ccvar_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::ChoiZhang	ChoiZhang.C	/^Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::ChoiZhang$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::Cv_	ChoiZhang.H	/^        dimensionedScalar Cv_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::correct	ChoiZhang.C	/^void Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::correct()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotAlphal	ChoiZhang.C	/^Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotP	ChoiZhang.C	/^Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotT	ChoiZhang.C	/^Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mcCoeff_	ChoiZhang.H	/^        dimensionedScalar mcCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mvCoeff_	ChoiZhang.H	/^        dimensionedScalar mvCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::override	ChoiZhang.H	/^        virtual void correct() override;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::read	ChoiZhang.C	/^bool Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::~ChoiZhang	ChoiZhang.H	/^    virtual ~ChoiZhang()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 correct	ChoiZhang.C	/^void Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::correct()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-mDotAlphal	ChoiZhang.C	/^Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotAlphal() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-mDotP	ChoiZhang.C	/^Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotP() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-mDotT	ChoiZhang.C	/^Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::mDotT() const$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-mcCoeff_	ChoiZhang.H	/^        dimensionedScalar mcCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
-mvCoeff_	ChoiZhang.H	/^        dimensionedScalar mvCoeff_;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 override	ChoiZhang.H	/^        virtual void correct() override;$/;"	m	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 phaseChangeTwoPhaseMixtures	ChoiZhang.C	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam	file:
 phaseChangeTwoPhaseMixtures	ChoiZhang.H	/^namespace phaseChangeTwoPhaseMixtures$/;"	n	language:C++	namespace:Foam
-read	ChoiZhang.C	/^bool Foam::phaseChangeTwoPhaseMixtures::ChoiZhang::read()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
 ~ChoiZhang	ChoiZhang.H	/^    virtual ~ChoiZhang()$/;"	f	language:C++	class:Foam::phaseChangeTwoPhaseMixtures::ChoiZhang
