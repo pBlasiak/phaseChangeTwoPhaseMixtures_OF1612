@@ -50,8 +50,8 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::NichitaThome
 :
     phaseChangeTwoPhaseMixture(typeName, U, phi),
 
-    cond_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("condensation")),
-    evap_(phaseChangeTwoPhaseMixtureCoeffs_.lookup("evaporation"))
+    cond_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("condensation")),
+    evap_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("evaporation"))
 {
 	Info<< "NichitaThome model settings:  " << endl;
 	Info<< "Condensation is " << cond_	<< endl;
@@ -60,55 +60,78 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::NichitaThome
 
 
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
-Foam ::volVectorField Foam::phaseChangeTwoPhaseMixtures::NichitaThome::calcGradAlphal() const
+// tmp by trzeba dodac
+Foam::volVectorField Foam::phaseChangeTwoPhaseMixtures::NichitaThome::calcGradAlphal() const
 {
 	volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 	return fvc::grad(limitedAlpha1);
 }
 
-Foam ::volVectorField Foam::phaseChangeTwoPhaseMixtures::NichitaThome::calcGradT() const
+Foam::volVectorField Foam::phaseChangeTwoPhaseMixtures::NichitaThome::calcGradT() const
 {
 	return fvc::grad(T_);
 }
 
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
-Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotAlphal() const
+Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotAlphal() 
 {
     volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
-    const dimensionedScalar T0("0", dimTemperature, 0.0);
+    const dimensionedScalar T1("1K", dimTemperature, 1.0);
 	const volScalarField kEff = this->k();
 	const volScalarField gradAlphaGradT = calcGradAlphal() & calcGradT();
+	const volScalarField rAlphal = pos(limitedAlpha1)*scalar(1)/(limitedAlpha1+SMALL);
+	const volScalarField r1mAlphal = pos(1.0-limitedAlpha1)*scalar(1)/(1.0-limitedAlpha1+SMALL);
+
+	mCondAlphal_ = -neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_;
+	mEvapAlphal_ =  pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_;
+
+	mCondNoAlphal_ = mCondAlphal_*r1mAlphal;
+	mEvapNoAlphal_ = mEvapAlphal_*rAlphal;
+	//mCondNoAlphal_ = -neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_*rAlphal;
+	//mEvapNoAlphal_ =  pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_*rAlphal;
+
+	// In NichitaThome model there is no alpha term
+	// probably it should be divided here by alphal and (1-alphal) but it
+	// could produce errrors. To avoid this and follow the algorithm in alphaEqn.H
+	// the modified NichitaThome model is implemented with additional multiplication
+	// by (1-alphal) for condensation and alphal for evaporation.
+	// Thus, the terms in pEqn and TEqn have to be also multiplied by these terms.
+	//mCondAlphal_   = mCondNoAlphal_;//*(1-limitedAlpha1);
+	//mEvapAlphal_   = mEvapNoAlphal_;//limitedAlpha1;
+
+	mCondNoTmTSat_ = -mCondAlphal_/T1;
+	mEvapNoTmTSat_ =  mEvapAlphal_/T1;
 
 	if (cond_ && evap_)
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		  -neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_/max(1.0 - limitedAlpha1, 1E-6),
-		   pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_/max(limitedAlpha1, 1E-6)
+	        mCondNoAlphal_*scalar(1),
+		    mEvapNoAlphal_*scalar(1)
 		);
 	}
 	else if (cond_)
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		   -neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_,
-			mEvapAlphal_*scalar(0)
+	        mCondNoAlphal_*scalar(1),
+		    mEvapNoAlphal_*scalar(0)
 		);
 	}
 	else if (evap_)
 	{
 		return Pair<tmp<volScalarField> >
 		(
-			mCondAlphal_*scalar(0),
-	        pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_
+	        mCondNoAlphal_*scalar(0),
+		    mEvapNoAlphal_*scalar(1)
 		);
 	}
 	else 
 	{
 		return Pair<tmp<volScalarField> >
 		(
-			mCondAlphal_*scalar(0),
-			mEvapAlphal_*scalar(0)
+	        mCondNoAlphal_*scalar(0),
+		    mEvapNoAlphal_*scalar(0)
 		);
 	}
 }
@@ -116,45 +139,37 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotAlphal() const
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotP() const
 {
-    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
-    const dimensionedScalar T0("0", dimTemperature, 0.0);
-	const volScalarField kEff = this->k();
-	const volScalarField gradAlphaGradT = calcGradAlphal() & calcGradT();
-
 	if (cond_ && evap_)
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		   -neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_
-						*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),
-		    pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_
-						*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
+	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),
+		    mEvapAlphal_*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
 		);
 	}
 	else if (cond_)
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		   -neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_
-						*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),
-			mEvapP_*scalar(0)
+	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),
+		    mEvapAlphal_*scalar(0)
+						*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
 		);
 	}
 	else if (evap_)
 	{
 		return Pair<tmp<volScalarField> >
 		(
-			mCondP_*scalar(0),
-		    pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_
-						*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
+	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*scalar(0),
+		    mEvapAlphal_*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
 		);
 	}
 	else 
 	{
 		return Pair<tmp<volScalarField> >
 		(
-			mCondP_*scalar(0),
-			mEvapP_*scalar(0)
+	        mCondAlphal_*scalar(0)*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),
+		    mEvapAlphal_*scalar(0)*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
 		);
 	}
 }
@@ -162,40 +177,37 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotP() const
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotT() const
 {
-    volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
-	const volScalarField kEff = this->k();
-	const volScalarField gradAlphaGradT = calcGradAlphal() & calcGradT();
-
+    const dimensionedScalar T1("1K", dimTemperature, 1.0);
 	if (cond_ && evap_)
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		    neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_/max(TSat_ - T_, 1E-6*TSat_),
-		   -pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_/max(T_ - TSat_, 1E-6*TSat_)
+		    mCondNoTmTSat_/max(TSat_ - T_, 1E-6*TSat_)*T1,
+		    mEvapNoTmTSat_/max(T_ - TSat_, 1E-6*TSat_)*T1
 		);
 	}
 	else if (cond_)
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		    neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_/max(TSat_ - T_, 1E-6*TSat_),
-			mEvapT_*scalar(0)
+		    mCondNoTmTSat_/max(TSat_ - T_, 1E-6*TSat_)*T1,
+		    mEvapNoTmTSat_/max(T_ - TSat_, 1E-6*TSat_)*T1*scalar(0)
 		);
 	}
 	else if (evap_)
 	{
 		return Pair<tmp<volScalarField> >
 		(
-			mCondT_*scalar(0),
-		   -pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_/max(T_ - TSat_, 1E-6*TSat_)
+		    mCondNoTmTSat_/max(TSat_ - T_, 1E-6*TSat_)*T1*scalar(0),
+		    mEvapNoTmTSat_/max(T_ - TSat_, 1E-6*TSat_)*T1
 		);
 	}
 	else
 	{
 		return Pair<tmp<volScalarField> >
 		(
-			mCondT_*scalar(0),
-			mEvapT_*scalar(0)
+		    mCondNoTmTSat_/max(TSat_ - T_, 1E-6*TSat_)*T1*scalar(0),
+		    mEvapNoTmTSat_/max(T_ - TSat_, 1E-6*TSat_)*T1*scalar(0)
 		);
 	}
 }

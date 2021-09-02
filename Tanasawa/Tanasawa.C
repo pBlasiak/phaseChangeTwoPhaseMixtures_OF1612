@@ -53,11 +53,6 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::Tanasawa
     cond_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("condensation")),
     evap_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("evaporation")),
     gamma_(phaseChangeTwoPhaseMixtureCoeffs_.subDict(type() + "Coeffs").lookup("gamma")),
-	// czy nie powinno byc dla wrzenia mnozone przez rho1?
-	// czyli czy nie powinno byc mvCoeff i mlCoeff?
-	// jak zmienilem dla nowego algorytmu dla parowania na rho1() 
-	// to mniejsze bledy wyszly, ale i tak sa duze
-	// ale doszlo do 30% bledu i stanelo wiec raczej ma byc rho2()
    	mCoeff_(2.0*gamma_/(2.0 - gamma_)/sqrt(2.0*M_PI*R_)*hEvap_*rho2())
 {
 	Info<< "Tanasawa model settings:  " << endl;
@@ -68,7 +63,7 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::Tanasawa
 
 
 // * * * * * * * * * * * * * * Member Functions  * * * * * * * * * * * * * * //
-Foam ::volScalarField Foam::phaseChangeTwoPhaseMixtures::Tanasawa::calcGradAlphal() const
+Foam::volScalarField Foam::phaseChangeTwoPhaseMixtures::Tanasawa::calcGradAlphal() const
 {
 	volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
 	return mag(fvc::grad(limitedAlpha1));
@@ -91,14 +86,14 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 	// the modified Tanasawa model is implemented with additional multiplication
 	// by (1-alphal) for condensation and alphal for evaporation.
 	// Thus, the terms in pEqn and TEqn have to be also multiplied by these terms.
+	// One can try to implement invAlpha which is zero for alphal = 0 otherwise
+	// 1/alphal and multiply it by mCondAlphal_ and mEvapAlphal_
 	mCondAlphal_   = mCondNoAlphal_*(1-limitedAlpha1);
 	mEvapAlphal_   = mEvapNoAlphal_*limitedAlpha1;
 
 	// minus sign to provide mc > 0  and mv > 0
 	mCondNoTmTSat_ = -mCoeff_*neg(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0))*(1-limitedAlpha1);
 	mEvapNoTmTSat_ =  mCoeff_*pos(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0))*limitedAlpha1;
-	//Info<< "mCondNoAlphal_ = " << mCondNoAlphal_ << endl;
-	//Info<< "mCondNoTmTSat_ = " << mCondNoTmTSat_ << endl;
 
 	if (cond_ && evap_)
 	{

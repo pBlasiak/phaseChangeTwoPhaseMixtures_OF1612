@@ -10,4 +10,5 @@ phaseChangeTwoPhaseMixture/newPhaseChangeTwoPhaseMixture.C \
 Lee/Lee.C \
 ChoiZhang/ChoiZhang.C \
 Xu/Xu.C \
-Tanasawa/Tanasawa.C 
+Tanasawa/Tanasawa.C \
+NichitaThome/NichitaThome.C 
