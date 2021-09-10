@@ -99,8 +99,6 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		//	-mCoeff_*min(T_ - TSat_ ,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0)),
-		//	-mCoeff_*max(T_ - TSat_ ,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0)) 
 	        mCondNoAlphal_*scalar(1),
 		    mEvapNoAlphal_*scalar(1)
 		);
@@ -109,8 +107,6 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		//	-mCoeff_*min(T_ - TSat_ ,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0)),
-		//	mEvapAlphal_*scalar(0)
 	        mCondNoAlphal_*scalar(1),
 		    mEvapNoAlphal_*scalar(0)
 		);
@@ -119,8 +115,6 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		//	mCondAlphal_*scalar(0),
-		//	-mCoeff_*max(T_ - TSat_ ,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
 	        mCondNoAlphal_*scalar(0),
 		    mEvapNoAlphal_*scalar(1)
 		);
@@ -129,8 +123,6 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 	{
 		return Pair<tmp<volScalarField> >
 		(
-	//		mCondAlphal_*scalar(0),
-	//		mEvapAlphal_*scalar(0)
 	        mCondNoAlphal_*scalar(0),
 		    mEvapNoAlphal_*scalar(0)
 		);
@@ -140,9 +132,6 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 Foam::Pair<Foam::tmp<Foam::volScalarField> >
 Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 {
-  //  volScalarField limitedAlpha1 = min(max(alpha1(), scalar(0)), scalar(1));
-  //  const dimensionedScalar T0("0", dimTemperature, 0.0);
-
 	if (cond_ && evap_)
 	{
 		return Pair<tmp<volScalarField> >
@@ -155,12 +144,7 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 	{
 		return Pair<tmp<volScalarField> >
 		(
-		//	-mCoeff_*min(T_ - TSat_,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
-		//				*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*(1.0-limitedAlpha1),
-
-	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),//*(1.0-limitedAlpha1),
-			//mEvapP_*scalar(0)
-	//        mCondAlphal_*scalar(1),
+	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_),
 		    mEvapAlphal_*scalar(0)
 						*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
 		);
@@ -169,9 +153,6 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotP() const
 	{
 		return Pair<tmp<volScalarField> >
 		(
-	//		mCondP_*scalar(0),
-	//		-mCoeff_*max(T_ - TSat_,T0)*calcGradAlphal()/sqrt(pow(TSat_,3.0))
-	//		//			*neg(p_-pSat_)/max(pSat_-p_,1E-05*pSat_)*limitedAlpha1
 	        mCondAlphal_*pos(p_-pSat_)/max(p_-pSat_,1E-6*pSat_)*scalar(0),
 		    mEvapAlphal_*neg(p_-pSat_)/max(pSat_-p_,1E-6*pSat_)
 		);

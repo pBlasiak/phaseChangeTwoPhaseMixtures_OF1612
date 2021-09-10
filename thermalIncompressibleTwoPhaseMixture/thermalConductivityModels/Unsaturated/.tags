@@ -1,0 +1,27 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Foam	Linear.C	/^namespace Foam$/;"	n	language:C++	file:
+Foam	Linear.H	/^namespace Foam$/;"	n	language:C++
+Foam::thermalConductivityModels	Linear.C	/^namespace thermalConductivityModels$/;"	n	language:C++	namespace:Foam	file:
+Foam::thermalConductivityModels	Linear.H	/^namespace thermalConductivityModels$/;"	n	language:C++	namespace:Foam
+Foam::thermalConductivityModels::Linear	Linear.H	/^class Linear$/;"	c	language:C++	namespace:Foam::thermalConductivityModels
+Foam::thermalConductivityModels::Linear::Linear	Linear.C	/^Foam::thermalConductivityModels::Linear::Linear$/;"	f	language:C++	class:Foam::thermalConductivityModels::Linear
+Foam::thermalConductivityModels::Linear::k	Linear.C	/^Foam::thermalConductivityModels::Linear::k(const Foam::thermalIncompressibleTwoPhaseMixture* titpm) const$/;"	f	language:C++	class:Foam::thermalConductivityModels::Linear
+Foam::thermalConductivityModels::Linear::override	Linear.H	/^        virtual tmp<volScalarField> k(const thermalIncompressibleTwoPhaseMixture* titpm) const override;$/;"	m	language:C++	class:Foam::thermalConductivityModels::Linear
+Foam::thermalConductivityModels::Linear::read	Linear.C	/^bool Foam::thermalConductivityModels::Linear::read()$/;"	f	language:C++	class:Foam::thermalConductivityModels::Linear
+Foam::thermalConductivityModels::Linear::~Linear	Linear.H	/^    virtual ~Linear()$/;"	f	language:C++	class:Foam::thermalConductivityModels::Linear
+Linear	Linear.C	/^Foam::thermalConductivityModels::Linear::Linear$/;"	f	language:C++	class:Foam::thermalConductivityModels::Linear
+Linear	Linear.H	/^class Linear$/;"	c	language:C++	namespace:Foam::thermalConductivityModels
+Linear.C	Linear.C	1;"	F	language:C++
+Linear.H	Linear.H	1;"	F	language:C++
+Linear_H	Linear.H	38;"	d	language:C++
+k	Linear.C	/^Foam::thermalConductivityModels::Linear::k(const Foam::thermalIncompressibleTwoPhaseMixture* titpm) const$/;"	f	language:C++	class:Foam::thermalConductivityModels::Linear
+override	Linear.H	/^        virtual tmp<volScalarField> k(const thermalIncompressibleTwoPhaseMixture* titpm) const override;$/;"	m	language:C++	class:Foam::thermalConductivityModels::Linear
+read	Linear.C	/^bool Foam::thermalConductivityModels::Linear::read()$/;"	f	language:C++	class:Foam::thermalConductivityModels::Linear
+thermalConductivityModels	Linear.C	/^namespace thermalConductivityModels$/;"	n	language:C++	namespace:Foam	file:
+thermalConductivityModels	Linear.H	/^namespace thermalConductivityModels$/;"	n	language:C++	namespace:Foam
+~Linear	Linear.H	/^    virtual ~Linear()$/;"	f	language:C++	class:Foam::thermalConductivityModels::Linear

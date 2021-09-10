@@ -79,16 +79,10 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotAlphal()
     const dimensionedScalar T1("1K", dimTemperature, 1.0);
 	const volScalarField kEff = this->k();
 	const volScalarField gradAlphaGradT = calcGradAlphal() & calcGradT();
-	const volScalarField rAlphal = pos(limitedAlpha1)*scalar(1)/(limitedAlpha1+SMALL);
-	const volScalarField r1mAlphal = pos(1.0-limitedAlpha1)*scalar(1)/(1.0-limitedAlpha1+SMALL);
 
-	mCondAlphal_ = -neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_;
-	mEvapAlphal_ =  pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_;
+	mCondNoAlphal_ = -neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_;
+	mEvapNoAlphal_ =  pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_;
 
-	mCondNoAlphal_ = mCondAlphal_*r1mAlphal;
-	mEvapNoAlphal_ = mEvapAlphal_*rAlphal;
-	//mCondNoAlphal_ = -neg(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_*rAlphal;
-	//mEvapNoAlphal_ =  pos(T_ - TSat_)*kEff*gradAlphaGradT/hEvap_*rAlphal;
 
 	// In NichitaThome model there is no alpha term
 	// probably it should be divided here by alphal and (1-alphal) but it
@@ -96,11 +90,13 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotAlphal()
 	// the modified NichitaThome model is implemented with additional multiplication
 	// by (1-alphal) for condensation and alphal for evaporation.
 	// Thus, the terms in pEqn and TEqn have to be also multiplied by these terms.
-	//mCondAlphal_   = mCondNoAlphal_;//*(1-limitedAlpha1);
-	//mEvapAlphal_   = mEvapNoAlphal_;//limitedAlpha1;
+	mCondAlphal_   = mCondNoAlphal_*(1-limitedAlpha1);
+	mEvapAlphal_   = mEvapNoAlphal_*limitedAlpha1;
+	//mCondAlphal_ = mCondAlphal_;//*pos(scalar(1)-limitedAlpha1)/max(scalar(1)-limitedAlpha1, 1e-6);
+	//mEvapAlphal_ = mEvapAlphal_;//*pos(limitedAlpha1)/max(limitedAlpha1, 1e-6);
 
-	mCondNoTmTSat_ = -mCondAlphal_/T1;
-	mEvapNoTmTSat_ =  mEvapAlphal_/T1;
+	mCondNoTmTSat_ = -neg(T_ - TSat_)*mCondAlphal_/T1;
+	mEvapNoTmTSat_ =  pos(T_ - TSat_)*mEvapAlphal_/T1;
 
 	if (cond_ && evap_)
 	{
