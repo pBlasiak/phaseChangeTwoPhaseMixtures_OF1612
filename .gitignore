@@ -30,6 +30,7 @@
 *.pyg
 *.o
 *.dep
+.tags
 
 
 # git-ls-files --others --exclude-from=.git/info/exclude
@@ -58,6 +59,8 @@ core
 *.dep
 # lnInclude (symlink) directories - anywhere
 lnInclude
+lnInclude/*
+lnInclude/
 # Build directories - anywhere
 linux*Clang*/
 linux*Gcc*/
