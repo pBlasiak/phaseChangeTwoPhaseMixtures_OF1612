@@ -95,8 +95,8 @@ Foam::phaseChangeTwoPhaseMixtures::NichitaThome::mDotAlphal()
 	//mCondAlphal_ = mCondAlphal_;//*pos(scalar(1)-limitedAlpha1)/max(scalar(1)-limitedAlpha1, 1e-6);
 	//mEvapAlphal_ = mEvapAlphal_;//*pos(limitedAlpha1)/max(limitedAlpha1, 1e-6);
 
-	mCondNoTmTSat_ = -neg(T_ - TSat_)*mCondAlphal_/T1;
-	mEvapNoTmTSat_ =  pos(T_ - TSat_)*mEvapAlphal_/T1;
+	mCondNoTmTSat_ = -mCondAlphal_/T1;
+	mEvapNoTmTSat_ =  mEvapAlphal_/T1;
 
 	if (cond_ && evap_)
 	{

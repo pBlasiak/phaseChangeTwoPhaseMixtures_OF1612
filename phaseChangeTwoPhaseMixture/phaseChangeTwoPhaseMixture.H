@@ -193,6 +193,12 @@ public:
         {
             return mEvap_;
         }
+	
+        //- Return const-access to the volumetric evaporation mass flux
+        const volScalarField& mEvapNoAlphal() const
+        {
+            return mEvapNoAlphal_;
+        }
 
         //- Return const-access to the global saturation temperature
         const dimensionedScalar& TSatG() const
