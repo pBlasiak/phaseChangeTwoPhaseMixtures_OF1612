@@ -25,7 +25,7 @@ License
 \*---------------------------------------------------------------------------*/
 
 #include "Tanasawa.H"
-#include "fvc.H"
+//#include "fvc.H"
 #include "mathematicalConstants.H"
 #include "addToRunTimeSelectionTable.H"
 
@@ -93,7 +93,15 @@ Foam::phaseChangeTwoPhaseMixtures::Tanasawa::mDotAlphal()
 		"zeroGradient"
     );
 	
-	dimensionedScalar DPsi = phaseChangeTwoPhaseMixtureCoeffs_.lookup("DPsi");
+  //dimensionedScalar DPsi = phaseChangeTwoPhaseMixtureCoeffs_.lookup("DPsi");
+    scalar spread_ = 3;
+    dimensionedScalar DPsi
+    (
+        "D",
+        dimArea,
+        spread_/sqr(gAverage(alpha1().mesh().nonOrthDeltaCoeffs()))
+    );
+
 //- alpha cutoff value for source term distribution 
 //  (no source terms in cells with cutoff < alpha1 < 1-cutoff)
 scalar cutoff = 1e-3;
@@ -117,9 +125,9 @@ scalar cutoff = 1e-3;
 
 
 
-	// minus sign "-" to provide mc > 0  and mv < 0
-	mCondNoAlphal_ = -mCoeff_*neg(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
-	mEvapNoAlphal_ = -mCoeff_*pos(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
+  // minus sign "-" to provide mc > 0  and mv < 0
+  mCondNoAlphal_ = -mCoeff_*neg(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
+  mEvapNoAlphal_ = -mCoeff_*pos(T_ - TSat_)*(T_ - TSat_)*gradAlphal/sqrt(pow(TSat_,3.0));
 
 dimensionedScalar intPsi0 = fvc::domainIntegrate(mEvapNoAlphal_);
 //- Smearing of source term field
